@@ -13,8 +13,9 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT;
-const email = 'contact@myoctogone.com';
+const endpoint =
+  import.meta.env.PUBLIC_CONTACT_ENDPOINT || 'https://formspree.io/f/xppzwgez';
+const email = 'octogone.techs@gmail.com';
 
 const labels = {
   name: ui[lang]['contact.form.name'],

@@ -77,7 +77,7 @@ export const ui = {
     'contact.form.message': 'Votre message',
     'contact.form.success': 'Message envoyé. Merci — nous revenons vers vous très vite.',
     'contact.form.error':
-      'L’envoi a échoué. Écrivez-nous directement à contact@myoctogone.com.',
+      'L’envoi a échoué. Écrivez-nous directement à octogone.techs@gmail.com.',
     'contact.form.fallback': 'ou écrivez-nous à',
     'contact.direct': 'Contact direct',
 
@@ -176,7 +176,7 @@ export const ui = {
     'contact.form.message': 'Your message',
     'contact.form.success': 'Message sent. Thank you — we’ll be in touch shortly.',
     'contact.form.error':
-      'Sending failed. Please email us directly at contact@myoctogone.com.',
+      'Sending failed. Please email us directly at octogone.techs@gmail.com.',
     'contact.form.fallback': 'or email us at',
     'contact.direct': 'Direct contact',
 
