@@ -1,0 +1,469 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ *
+ *  Octogone — design tokens (Tailwind v4 @theme)
+ * ------------------------------------------------------------------ */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Base surfaces — dark-first */
+  --color-void: #05060a;
+  --color-ink: #0a0c14;
+  --color-panel: #0e1120;
+  --color-panel-2: #141830;
+  --color-line: #23273d;
+  --color-line-strong: #333a5c;
+
+  --color-mist: #c7cbe0;
+  --color-mute: #8b90ad;
+  --color-faint: #5c6180;
+
+  /* Accent family */
+  --color-blue: #2563eb;
+  --color-azure: #3b82f6;
+  --color-cyan: #22d3ee;
+  --color-violet: #7c3aed;
+  --color-iris: #a855f7;
+
+  --color-signal: #22d3ee;
+
+  --shadow-glow: 0 0 0 1px rgba(34, 211, 238, 0.14),
+    0 20px 60px -20px rgba(37, 99, 235, 0.4);
+  --shadow-panel: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
+
+  --radius-xl2: 1.375rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --container-8xl: 90rem;
+}
+
+/* ------------------------------------------------------------------ *
+ *  Fonts
+ * ------------------------------------------------------------------ */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local('Inter');
+}
+
+/* ------------------------------------------------------------------ *
+ *  Base
+ * ------------------------------------------------------------------ */
+:root {
+  color-scheme: dark;
+  --scrollbar: #1b1f34;
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-void);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-mist);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.28);
+  color: #fff;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  color: #fff;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar);
+  border-radius: 999px;
+  border: 2px solid var(--color-void);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-line-strong);
+}
+
+/* ------------------------------------------------------------------ *
+ *  Utilities
+ * ------------------------------------------------------------------ */
+
+/* Octagon clip — used on frames, badges, media */
+.clip-octagon {
+  clip-path: polygon(
+    28px 0,
+    calc(100% - 28px) 0,
+    100% 28px,
+    100% calc(100% - 28px),
+    calc(100% - 28px) 100%,
+    28px 100%,
+    0 calc(100% - 28px),
+    0 28px
+  );
+}
+.clip-octagon-sm {
+  clip-path: polygon(
+    14px 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    14px 100%,
+    0 calc(100% - 14px),
+    0 14px
+  );
+}
+
+.container-page {
+  width: 100%;
+  max-width: var(--container-8xl);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 4rem);
+}
+
+/* Glass panel */
+.glass {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid var(--color-line);
+  backdrop-filter: blur(14px);
+}
+
+.hairline {
+  border: 1px solid var(--color-line);
+}
+
+/* Gradient text (static fallback; the shimmer island animates position) */
+.text-gradient {
+  background: linear-gradient(
+    100deg,
+    #fff 0%,
+    var(--color-cyan) 42%,
+    var(--color-iris) 72%,
+    #fff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Section eyebrow */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-cyan);
+}
+.eyebrow::before {
+  content: '';
+  width: 1.6rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-cyan));
+}
+
+/* Grid backdrop */
+.bg-grid {
+  background-image: linear-gradient(
+      to right,
+      rgba(120, 170, 255, 0.07) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(120, 170, 255, 0.07) 1px, transparent 1px);
+  background-size: 58px 58px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #000 40%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #000 40%,
+    transparent 100%
+  );
+}
+
+.glow-blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(90px);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Rotating octagon wireframe motif */
+@keyframes oct-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.oct-ring {
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid rgba(120, 170, 255, 0.14);
+  clip-path: polygon(
+    30% 0,
+    70% 0,
+    100% 30%,
+    100% 70%,
+    70% 100%,
+    30% 100%,
+    0 70%,
+    0 30%
+  );
+  animation: oct-spin 60s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .oct-ring {
+    animation: none;
+  }
+}
+
+/* Subtle film grain */
+.bg-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Buttons */
+.btn {
+  --btn-bg: var(--color-cyan);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  padding: 0.85rem 1.5rem;
+  transition: transform 0.25s var(--ease-out-expo), box-shadow 0.25s ease,
+    background 0.25s ease, color 0.25s ease;
+  will-change: transform;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn-primary {
+  background: linear-gradient(100deg, var(--color-cyan), var(--color-blue));
+  color: #04121c;
+  box-shadow: 0 12px 40px -14px rgba(34, 211, 238, 0.6);
+}
+.btn-primary:hover {
+  box-shadow: 0 18px 50px -12px rgba(34, 211, 238, 0.8);
+}
+.btn-ghost {
+  border: 1px solid var(--color-line-strong);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.02);
+}
+.btn-ghost:hover {
+  border-color: var(--color-cyan);
+  background: rgba(34, 211, 238, 0.08);
+}
+
+/* Link with arrow */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+  transition: gap 0.25s var(--ease-out-expo), color 0.25s ease;
+}
+.link-arrow:hover {
+  gap: 0.75rem;
+  color: var(--color-cyan);
+}
+
+/* Chips / tags */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-mist);
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 999px;
+}
+
+/* Marquee */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x var(--marquee-duration, 38s) linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Astro view transitions — page fade/slide */
+@keyframes oct-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes oct-slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+::view-transition-old(root) {
+  animation: 260ms var(--ease-out-expo) both oct-slide-out;
+}
+::view-transition-new(root) {
+  animation: 360ms var(--ease-out-expo) both oct-slide-in;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Scroll reveal (pure CSS + one shared IntersectionObserver)
+ * ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.75s var(--ease-out-expo),
+    transform 0.75s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.65s var(--ease-out-expo),
+    transform 0.65s var(--ease-out-expo);
+}
+.reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 60ms; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 120ms; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 180ms; }
+.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 240ms; }
+.reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 300ms; }
+.reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 360ms; }
+.reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 420ms; }
+.reveal-stagger.is-visible > *:nth-child(n + 9) { transition-delay: 480ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+.no-js .reveal,
+.no-js .reveal-stagger > * {
+  opacity: 1;
+  transform: none;
+}

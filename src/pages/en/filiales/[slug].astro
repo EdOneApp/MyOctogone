@@ -1,0 +1,24 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SubsidiaryContent from '../../../sections/subsidiary/SubsidiaryContent.astro';
+import { subsidiaries } from '../../../data/subsidiaries';
+import { tf } from '../../../i18n/utils';
+
+export const getStaticPaths = (() => {
+  return subsidiaries.map((s) => ({
+    params: { slug: s.slug },
+    props: { subsidiary: s },
+  }));
+}) satisfies GetStaticPaths;
+
+const { subsidiary } = Astro.props;
+const lang = 'en' as const;
+
+const title = `${subsidiary.name} — ${tf(subsidiary.sector, lang)} | Octogone`;
+const description = tf(subsidiary.tagline, lang);
+---
+
+<BaseLayout title={title} description={description} image={subsidiary.heroImage}>
+  <SubsidiaryContent subsidiary={subsidiary} lang={lang} />
+</BaseLayout>

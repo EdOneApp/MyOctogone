@@ -1,0 +1,24 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectContent from '../../sections/project/ProjectContent.astro';
+import { projects } from '../../data/projects';
+import { tf } from '../../i18n/utils';
+
+export const getStaticPaths = (() => {
+  return projects.map((p) => ({
+    params: { slug: p.slug },
+    props: { project: p },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const lang = 'fr' as const;
+
+const title = `${project.title} — ${tf(project.category, lang)} | Octogone`;
+const description = tf(project.summary, lang);
+---
+
+<BaseLayout title={title} description={description} image={project.image}>
+  <ProjectContent project={project} lang={lang} />
+</BaseLayout>

@@ -1,0 +1,75 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+import Reveal from '../../components/Reveal.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const steps = [
+  {
+    fr: { title: 'Cadrage', body: 'Ateliers avec vos équipes, objectifs mesurables, contraintes réglementaires et techniques identifiées.' },
+    en: { title: 'Framing', body: 'Workshops with your teams, measurable goals, regulatory and technical constraints identified.' },
+  },
+  {
+    fr: { title: 'Conception', body: 'Architecture, maquettes, plan de charge et jalons. Vous validez avant que le premier euro ne soit engagé.' },
+    en: { title: 'Design', body: 'Architecture, mockups, workload plan and milestones. You sign off before the first euro is committed.' },
+  },
+  {
+    fr: { title: 'Réalisation', body: 'Itérations courtes, revues régulières, tests automatisés. Un point d’avancement transparent chaque semaine.' },
+    en: { title: 'Build', body: 'Short iterations, regular reviews, automated tests. A transparent progress checkpoint every week.' },
+  },
+  {
+    fr: { title: 'Mise en production', body: 'Déploiement maîtrisé, formation des utilisateurs, reprise des données et bascule sans interruption.' },
+    en: { title: 'Go-live', body: 'Controlled deployment, user training, data migration and switchover with no interruption.' },
+  },
+  {
+    fr: { title: 'Exploitation', body: 'Supervision, support et évolutions. Nous restons responsables de ce que nous livrons.' },
+    en: { title: 'Operations', body: 'Monitoring, support and evolutions. We stay accountable for what we deliver.' },
+  },
+];
+---
+
+<section class="relative py-24 sm:py-32">
+  <div class="container-page">
+    <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <Reveal>
+          <span class="eyebrow">{t('label.approach')}</span>
+          <h2 class="mt-5 font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white">
+            {lang === 'fr' ? 'Du premier atelier à l’exploitation' : 'From the first workshop to operations'}
+          </h2>
+          <p class="mt-5 max-w-md text-[#8b90ad]">{t('home.approach.subtitle')}</p>
+        </Reveal>
+      </div>
+
+      <Reveal stagger class="relative">
+        <div
+          class="absolute left-[19px] top-2 bottom-2 w-px bg-gradient-to-b from-cyan-400/60 via-[#23273d] to-transparent"
+          aria-hidden="true"
+        >
+        </div>
+        <ol class="space-y-8">
+          {
+            steps.map((s, i) => (
+              <li class="relative pl-14">
+                <span
+                  class="clip-octagon-sm absolute left-0 top-0 grid h-10 w-10 place-items-center border border-cyan-300/30 bg-[#0e1120] font-display text-sm font-semibold text-cyan-300"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 class="font-display text-lg font-semibold text-white">
+                  {s[lang].title}
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-[#8b90ad]">{s[lang].body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </Reveal>
+    </div>
+  </div>
+</section>

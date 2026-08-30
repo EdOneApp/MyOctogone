@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactContent from '../sections/ContactContent.astro';
+import { useTranslations } from '../i18n/utils';
+
+const lang = 'fr' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('meta.contact.title')} description={t('meta.contact.desc')}>
+  <ContactContent lang={lang} />
+</BaseLayout>

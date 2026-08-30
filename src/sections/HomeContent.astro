@@ -1,0 +1,23 @@
+---
+import type { Lang } from '../i18n/ui';
+import Hero from './home/Hero.astro';
+import StatsStrip from './home/StatsStrip.astro';
+import SectorsGrid from './home/SectorsGrid.astro';
+import FeaturedProjects from './home/FeaturedProjects.astro';
+import Approach from './home/Approach.astro';
+import PartnersMarquee from './home/PartnersMarquee.astro';
+import CTA from './CTA.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<Hero lang={lang} />
+<StatsStrip lang={lang} />
+<SectorsGrid lang={lang} />
+<FeaturedProjects lang={lang} />
+<Approach lang={lang} />
+<PartnersMarquee lang={lang} />
+<CTA lang={lang} />

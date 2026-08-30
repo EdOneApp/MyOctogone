@@ -1,0 +1,131 @@
+---
+import { useTranslations, localizePath, asset } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+import ParticleField from '../../components/react/ParticleField.tsx';
+import GradientText from '../../components/react/GradientText.tsx';
+import Reveal from '../../components/Reveal.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="bg-noise relative isolate overflow-hidden">
+  <!-- Background layers -->
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute inset-0 bg-[#05060a]"></div>
+
+    <!-- colour wash -->
+    <div
+      class="glow-blob left-[-6%] top-[2%] h-[46rem] w-[46rem]"
+      style="background: radial-gradient(circle, rgba(37,99,235,0.75), transparent 62%)"
+    >
+    </div>
+    <div
+      class="glow-blob right-[-8%] top-[14%] h-[40rem] w-[40rem]"
+      style="background: radial-gradient(circle, rgba(168,85,247,0.55), transparent 62%)"
+    >
+    </div>
+    <div
+      class="glow-blob bottom-[-14%] left-[38%] h-[34rem] w-[34rem]"
+      style="background: radial-gradient(circle, rgba(34,211,238,0.4), transparent 65%)"
+    >
+    </div>
+
+    <!-- rotating octagon rings -->
+    <div class="oct-ring right-[-16rem] top-[-14rem] h-[46rem] w-[46rem]"></div>
+    <div
+      class="oct-ring right-[-8rem] top-[-6rem] h-[30rem] w-[30rem]"
+      style="animation-duration: 44s; animation-direction: reverse;"
+    >
+    </div>
+
+    <!-- grid + particles -->
+    <div class="bg-grid absolute inset-0 opacity-90"></div>
+    <ParticleField client:visible density={90} />
+
+    <!-- video accent -->
+    <video
+      class="absolute right-0 top-0 h-full w-1/2 object-cover opacity-[0.14] [mask-image:radial-gradient(ellipse_at_right,#000_5%,transparent_70%)]"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      aria-hidden="true"
+    >
+      <source src={asset('assets/logo-video.mp4')} type="video/mp4" />
+    </video>
+
+    <!-- bottom fade into next section -->
+    <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#05060a] via-[#05060a]/70 to-transparent"></div>
+  </div>
+
+  <div class="container-page relative flex min-h-[100svh] flex-col justify-center pb-24 pt-32">
+    <Reveal>
+      <span class="eyebrow">Octogone Holding</span>
+    </Reveal>
+
+    <h1
+      class="mt-6 max-w-5xl font-display text-[clamp(2.8rem,7.4vw,5.6rem)] font-bold leading-[1.02]"
+    >
+      <span class="block text-white">{t('hero.title.a')}</span>
+      <GradientText client:load text={t('hero.title.b')} />
+    </h1>
+
+    <Reveal delay={0.15}>
+      <p class="mt-8 max-w-2xl text-lg leading-relaxed text-[#c7cbe0] sm:text-xl">
+        {t('hero.subtitle')}
+      </p>
+    </Reveal>
+
+    <Reveal delay={0.25}>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a href={`${localizePath('/', lang)}#filiales`} class="btn btn-primary clip-octagon-sm">
+          {t('cta.discover')}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <a href={localizePath('/contact', lang)} class="btn btn-ghost clip-octagon-sm">
+          {t('cta.talk')}
+        </a>
+      </div>
+    </Reveal>
+
+    <!-- eight-sector ticker -->
+    <Reveal delay={0.35} class="mt-16 hidden flex-wrap gap-x-6 gap-y-2 border-t border-[#23273d] pt-6 sm:flex">
+      {
+        [
+          lang === 'fr' ? 'Technologie' : 'Technology',
+          lang === 'fr' ? 'BTP' : 'Construction',
+          lang === 'fr' ? 'Logistique' : 'Logistics',
+          'Finance',
+          lang === 'fr' ? 'Agro-alimentaire' : 'Agri-food',
+          'Transport',
+          lang === 'fr' ? 'Formation' : 'Training',
+          lang === 'fr' ? 'Sécurité' : 'Security',
+        ].map((s) => (
+          <span class="font-display text-xs font-medium uppercase tracking-[0.18em] text-[#5c6180]">
+            {s}
+          </span>
+        ))
+      }
+    </Reveal>
+
+    <!-- Scroll cue -->
+    <div class="mt-14 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[#5c6180]">
+      <span class="relative flex h-9 w-5 justify-center rounded-full border border-[#333a5c]">
+        <span class="mt-1.5 h-1.5 w-1 animate-bounce rounded-full bg-cyan-300"></span>
+      </span>
+      {t('hero.scroll')}
+    </div>
+  </div>
+</section>

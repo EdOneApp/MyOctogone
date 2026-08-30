@@ -1,0 +1,97 @@
+---
+import { getLangFromUrl, useTranslations, localizePath } from '../i18n/utils';
+import { getNav, getCta, getLangSwitch } from '../i18n/nav';
+import { ui } from '../i18n/ui';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import MobileNav from './react/MobileNav.tsx';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const nav = getNav(lang);
+const cta = getCta(lang);
+const langSwitch = getLangSwitch(lang, Astro.url.pathname);
+const home = localizePath('/', lang);
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 transition-[background,border-color,backdrop-filter] duration-300"
+  data-scrolled="false"
+>
+  <div class="container-page flex h-[72px] items-center justify-between gap-6">
+    <a href={home} class="group flex items-center gap-2.5" aria-label="Octogone — accueil">
+      <span
+        class="clip-octagon-sm grid h-9 w-9 place-items-center bg-gradient-to-br from-cyan-400 to-blue-600 text-[#04121c]"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M7.5 3h9L21 7.5v9L16.5 21h-9L3 16.5v-9L7.5 3Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <span class="font-display text-lg font-bold tracking-tight text-white">OCTOGONE</span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label={t('nav.menu')}>
+      {
+        nav.map((l) => {
+          const active =
+            l.href === current ||
+            (l.href.includes('#') && current === home);
+          return (
+            <a
+              href={l.href}
+              class:list={[
+                'rounded-lg px-3.5 py-2 font-display text-sm font-medium transition-colors',
+                active ? 'text-white' : 'text-[#8b90ad] hover:text-white',
+              ]}
+            >
+              {l.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <div class="hidden items-center gap-3 md:flex">
+      <LanguageSwitcher />
+      <a href={cta.href} class="btn btn-primary clip-octagon-sm !px-4 !py-2 text-sm">
+        {t('nav.contact')}
+      </a>
+    </div>
+
+    <MobileNav
+      client:load
+      links={nav}
+      cta={cta}
+      langSwitch={langSwitch}
+      openLabel={ui[lang]['nav.menu']}
+      closeLabel={ui[lang]['nav.close']}
+    />
+  </div>
+  <div class="h-px w-full bg-gradient-to-r from-transparent via-[#23273d] to-transparent"></div>
+</header>
+
+<script is:inline>
+  (() => {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+    const onScroll = () => {
+      header.dataset.scrolled = String(window.scrollY > 12);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('astro:after-swap', onScroll);
+  })();
+</script>
+
+<style>
+  #site-header[data-scrolled='true'] {
+    background: rgba(5, 6, 10, 0.72);
+    backdrop-filter: blur(16px);
+  }
+</style>

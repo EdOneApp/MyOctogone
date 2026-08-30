@@ -1,0 +1,43 @@
+---
+import { stripLang } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  image?: string;
+}
+
+const { title, description, lang, image = 'assets/logo.png' } = Astro.props;
+
+const site = Astro.site ?? new URL('https://myoctogone.com');
+const canonicalPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical = new URL(canonicalPath, site).href;
+const ogImage = new URL(image, site).href;
+
+const basePath = stripLang(canonicalPath);
+const frHref = new URL(basePath, site).href;
+const enHref = new URL(basePath === '/' ? '/en' : `/en${basePath}`, site).href;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<link rel="alternate" hreflang="fr" href={frHref} />
+<link rel="alternate" hreflang="en" href={enHref} />
+<link rel="alternate" hreflang="x-default" href={frHref} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Octogone" />
+<meta property="og:locale" content={lang === 'fr' ? 'fr_CI' : 'en_US'} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />

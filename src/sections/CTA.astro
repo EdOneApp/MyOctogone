@@ -1,0 +1,52 @@
+---
+import { useTranslations, localizePath } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+import Reveal from '../components/Reveal.astro';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  subtitle?: string;
+}
+const { lang, title, subtitle } = Astro.props;
+const t = useTranslations(lang);
+
+const heading =
+  title ?? (lang === 'fr' ? 'Un projet, une filiale, une ambition ?' : 'A project, a subsidiary, an ambition?');
+const sub =
+  subtitle ??
+  (lang === 'fr'
+    ? 'Écrivez-nous : nous orientons votre demande vers la bonne équipe et revenons vers vous sous 48 heures ouvrées.'
+    : 'Write to us: we route your request to the right team and get back to you within 48 business hours.');
+---
+
+<section class="py-24 sm:py-32">
+  <div class="container-page">
+    <Reveal>
+      <div
+        class="clip-octagon relative overflow-hidden border border-[#23273d] bg-[#0a0c14] px-8 py-16 text-center sm:px-16 sm:py-20"
+      >
+        <div
+          class="glow-blob left-1/2 top-0 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/3"
+          style="background: radial-gradient(circle, rgba(37,99,235,0.35), transparent 65%)"
+        >
+        </div>
+        <div class="bg-grid absolute inset-0 opacity-40"></div>
+        <div class="relative mx-auto max-w-2xl">
+          <h2 class="font-display text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-white">
+            {heading}
+          </h2>
+          <p class="mt-5 text-[#8b90ad]">{sub}</p>
+          <div class="mt-9 flex flex-wrap justify-center gap-4">
+            <a href={localizePath('/contact', lang)} class="btn btn-primary clip-octagon-sm">
+              {t('cta.talk')}
+            </a>
+            <a href={localizePath('/a-propos', lang)} class="btn btn-ghost clip-octagon-sm">
+              {t('nav.group')}
+            </a>
+          </div>
+        </div>
+      </div>
+    </Reveal>
+  </div>
+</section>

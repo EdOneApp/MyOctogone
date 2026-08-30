@@ -1,0 +1,29 @@
+---
+/**
+ * Pure-CSS scroll reveal. A single shared IntersectionObserver in BaseLayout
+ * adds `.is-visible`. No client JS island, no hydration race.
+ *
+ * Props:
+ *  - as:      wrapper tag (default 'div')
+ *  - stagger: animate direct children in sequence
+ *  - delay:   extra delay in seconds (applied to the block, not children)
+ *  - class:   forwarded classes
+ */
+interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  stagger?: boolean;
+  delay?: number;
+  class?: string;
+}
+
+const { as = 'div', stagger = false, delay, class: className } = Astro.props as Props;
+const Tag = as;
+const style = delay ? `transition-delay:${Math.round(delay * 1000)}ms` : undefined;
+---
+
+<Tag
+  class:list={['reveal', stagger && 'reveal-stagger', className]}
+  style={style}
+>
+  <slot />
+</Tag>
