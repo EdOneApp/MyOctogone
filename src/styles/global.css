@@ -179,17 +179,19 @@ video {
 /* Amber underline accent under a word: <span class="mark-underline">word</span> */
 .mark-underline {
   position: relative;
+  display: inline-block;
+  isolation: isolate;
   white-space: nowrap;
 }
 .mark-underline::after {
   content: '';
   position: absolute;
-  left: -0.05em;
-  right: -0.05em;
-  bottom: 0.06em;
-  height: 0.32em;
+  left: -0.08em;
+  right: -0.08em;
+  bottom: 0.08em;
+  height: 0.34em;
   background: var(--color-amber);
-  opacity: 0.4;
+  opacity: 0.45;
   border-radius: 4px;
   z-index: -1;
 }
