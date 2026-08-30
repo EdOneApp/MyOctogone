@@ -14,8 +14,9 @@ export const subsidiaries: Subsidiary[] = [
       fr: 'Logiciels, data, cloud et cybersécurité, du cadrage à la production.',
       en: 'Software, data, cloud and cybersecurity, from framing to production.',
     },
+    icon: 'assets/icon-technologies.png',
     heroImage: 'assets/technologie.jpeg',
-    accent: { from: '#22d3ee', to: '#2563eb' },
+    accent: { from: '#1C2951', to: '#F5A623' },
     intro: [
       {
         fr: 'Octogone Technologies conçoit et opère des plateformes numériques pour l’administration, la finance, l’agriculture et le commerce. Web, mobile, desktop : nos équipes couvrent tout le cycle, de l’atelier de cadrage à l’exploitation en production.',
@@ -106,8 +107,9 @@ export const subsidiaries: Subsidiary[] = [
       fr: 'Construire des ouvrages fiables, dans les délais et les budgets.',
       en: 'Delivering reliable structures, on time and on budget.',
     },
+    icon: 'assets/icon-btp.png',
     heroImage: 'assets/batimemt-et-travaux-public.jpeg',
-    accent: { from: '#38bdf8', to: '#6366f1' },
+    accent: { from: '#1C2951', to: '#F5A623' },
     intro: [
       {
         fr: 'Octogone BTP réalise des projets de bâtiment et d’infrastructure pour des maîtres d’ouvrage publics et privés : immeubles tertiaires, équipements collectifs, voiries et réseaux divers.',
@@ -171,8 +173,9 @@ export const subsidiaries: Subsidiary[] = [
       fr: 'Faire circuler les marchandises, du port au dernier kilomètre.',
       en: 'Moving goods, from the port to the last mile.',
     },
+    icon: 'assets/icon-logistique.png',
     heroImage: 'assets/global-logistics.jpeg',
-    accent: { from: '#22d3ee', to: '#0ea5e9' },
+    accent: { from: '#1C2951', to: '#F5A623' },
     intro: [
       {
         fr: 'Octogone Global Logistique organise le transport, l’entreposage et la distribution de marchandises pour des industriels, des distributeurs et des acteurs du e-commerce.',
@@ -235,8 +238,9 @@ export const subsidiaries: Subsidiary[] = [
       fr: 'Structurer, financer et sécuriser la croissance.',
       en: 'Structuring, financing and securing growth.',
     },
+    icon: 'assets/icon-finance.png',
     heroImage: 'assets/finance.jpeg',
-    accent: { from: '#34d399', to: '#22d3ee' },
+    accent: { from: '#1C2951', to: '#F5A623' },
     intro: [
       {
         fr: 'Octogone Finance accompagne entreprises et institutions sur le financement, la structuration d’opérations et l’ingénierie financière, avec une bonne connaissance du marché UEMOA.',
@@ -299,8 +303,9 @@ export const subsidiaries: Subsidiary[] = [
       fr: 'De la parcelle au rayon, une filière maîtrisée.',
       en: 'From the field to the shelf, a controlled value chain.',
     },
+    icon: 'assets/icon-agro-alimentaire.png',
     heroImage: 'assets/agro-alimentaire.jpeg',
-    accent: { from: '#4ade80', to: '#22d3ee' },
+    accent: { from: '#1C2951', to: '#F5A623' },
     intro: [
       {
         fr: 'Octogone Agro-alimentaire structure des filières agricoles : approvisionnement auprès des producteurs, transformation, conditionnement et mise en marché de produits locaux.',
@@ -363,8 +368,9 @@ export const subsidiaries: Subsidiary[] = [
       fr: 'Déplacer les personnes et les biens, efficacement et en sécurité.',
       en: 'Moving people and goods, efficiently and safely.',
     },
+    icon: 'assets/icon-transport.png',
     heroImage: 'assets/transport.jpeg',
-    accent: { from: '#22d3ee', to: '#3b82f6' },
+    accent: { from: '#1C2951', to: '#F5A623' },
     intro: [
       {
         fr: 'Octogone Transport opère des services de transport de personnes et de marchandises : lignes régulières, transport à la demande, affrètement et gestion de flotte pour compte de tiers.',
@@ -427,8 +433,9 @@ export const subsidiaries: Subsidiary[] = [
       fr: 'Former les talents dont l’économie a besoin.',
       en: 'Training the talent the economy needs.',
     },
+    icon: 'assets/icon-formation.png',
     heroImage: 'assets/formation.jpeg',
-    accent: { from: '#818cf8', to: '#a855f7' },
+    accent: { from: '#1C2951', to: '#F5A623' },
     intro: [
       {
         fr: 'Octogone Formation conçoit et anime des programmes de formation professionnelle et continue : numérique, métiers du BTP, logistique, finance et management.',
@@ -491,8 +498,9 @@ export const subsidiaries: Subsidiary[] = [
       fr: 'Protéger les sites, les biens et les personnes.',
       en: 'Protecting sites, assets and people.',
     },
+    icon: 'assets/icon-securite.png',
     heroImage: 'assets/security.jpeg',
-    accent: { from: '#60a5fa', to: '#7c3aed' },
+    accent: { from: '#1C2951', to: '#F5A623' },
     intro: [
       {
         fr: 'Octogone Sécurité assure la protection physique et électronique des sites : gardiennage, télésurveillance, contrôle d’accès, vidéoprotection et conseil en sûreté.',

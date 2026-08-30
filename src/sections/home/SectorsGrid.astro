@@ -1,8 +1,7 @@
 ---
-import { useTranslations, localizePath, tf } from '../../i18n/utils';
+import { useTranslations, localizePath, tf, asset } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 import { subsidiaries } from '../../data/subsidiaries';
-import { projectsBySubsidiary } from '../../data/projects';
 import CardGrid, { type CardItem } from '../../components/react/CardGrid.tsx';
 import Reveal from '../../components/Reveal.astro';
 
@@ -18,23 +17,20 @@ const items: CardItem[] = subsidiaries.map((s, i) => ({
   subtitle: tf(s.sector, lang),
   description: tf(s.tagline, lang),
   href: localizePath(`/filiales/${s.slug}`, lang),
-  accent: s.accent,
-  tags: [
-    `${projectsBySubsidiary(s.slug).length} ${t('label.projects').toLowerCase()}`,
-  ],
+  icon: asset(s.icon),
   cta: t('cta.explore'),
 }));
 ---
 
-<section id="filiales" class="relative scroll-mt-24 py-24 sm:py-32">
+<section id="filiales" class="section scroll-mt-24 bg-[var(--color-cream)]">
   <div class="container-page">
     <div class="max-w-2xl">
       <Reveal>
         <span class="eyebrow">{t('label.sectors')}</span>
-        <h2 class="mt-5 font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white">
+        <h2 class="mt-5 font-display text-[clamp(1.9rem,4vw,2.9rem)] font-bold text-[var(--color-ink)]">
           {t('home.sectors.title')}
         </h2>
-        <p class="mt-5 text-[#8b90ad]">{t('home.sectors.subtitle')}</p>
+        <p class="mt-5 text-[var(--color-body)]">{t('home.sectors.subtitle')}</p>
       </Reveal>
     </div>
 

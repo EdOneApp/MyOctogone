@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, useTranslations, localizePath, tf } from '../i18n/utils';
+import { getLangFromUrl, useTranslations, localizePath, tf, asset } from '../i18n/utils';
 import { subsidiaries } from '../data/subsidiaries';
 import { getNav } from '../i18n/nav';
 
@@ -7,46 +7,42 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const nav = getNav(lang);
 const year = new Date().getFullYear();
+const email = 'octogone.techs@gmail.com';
 ---
 
-<footer class="relative mt-24 border-t border-[#23273d] bg-[#07080e]">
-  <div class="container-page grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
+<footer class="border-t border-[var(--color-line-cool)] bg-[var(--color-cream)]">
+  <div class="container-page grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr] md:py-20">
     <div>
-      <div class="flex items-center gap-2.5">
-        <span
-          class="clip-octagon-sm grid h-9 w-9 place-items-center bg-gradient-to-br from-cyan-400 to-blue-600 text-[#04121c]"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M7.5 3h9L21 7.5v9L16.5 21h-9L3 16.5v-9L7.5 3Z"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-        </span>
-        <span class="font-display text-lg font-bold tracking-tight text-white">OCTOGONE</span>
-      </div>
-      <p class="mt-4 max-w-xs text-sm leading-relaxed text-[#8b90ad]">
+      <img
+        src={asset('assets/logo-lockup.png')}
+        alt="Octogone — La Boîte à Génies"
+        width="180"
+        height="120"
+        class="h-16 w-auto"
+      />
+      <p class="mt-5 max-w-xs text-sm leading-relaxed text-[var(--color-body)]">
         {t('footer.tagline')}
       </p>
       <a
-        href="mailto:octogone.techs@gmail.com"
-        class="mt-4 inline-block text-sm text-cyan-300 underline-offset-2 hover:underline"
+        href={`mailto:${email}`}
+        class="mt-4 inline-block text-sm font-medium text-[var(--color-navy)] underline-offset-2 hover:text-[var(--color-amber-600)] hover:underline"
       >
-        octogone.techs@gmail.com
+        {email}
       </a>
     </div>
 
     <div>
-      <h2 class="font-display text-xs font-semibold uppercase tracking-[0.22em] text-[#5c6180]">
+      <h2 class="font-display text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)]">
         {t('footer.nav')}
       </h2>
       <ul class="mt-4 space-y-2.5">
         {
           nav.map((l) => (
             <li>
-              <a href={l.href} class="text-sm text-[#8b90ad] transition-colors hover:text-white">
+              <a
+                href={l.href}
+                class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-navy)]"
+              >
                 {l.label}
               </a>
             </li>
@@ -56,7 +52,7 @@ const year = new Date().getFullYear();
     </div>
 
     <div>
-      <h2 class="font-display text-xs font-semibold uppercase tracking-[0.22em] text-[#5c6180]">
+      <h2 class="font-display text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)]">
         {t('label.subsidiaries')}
       </h2>
       <ul class="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-1">
@@ -65,7 +61,7 @@ const year = new Date().getFullYear();
             <li>
               <a
                 href={localizePath(`/filiales/${s.slug}`, lang)}
-                class="text-sm text-[#8b90ad] transition-colors hover:text-white"
+                class="text-sm text-[var(--color-body)] transition-colors hover:text-[var(--color-navy)]"
               >
                 {tf(s.sector, lang)}
               </a>
@@ -76,9 +72,9 @@ const year = new Date().getFullYear();
     </div>
   </div>
 
-  <div class="border-t border-[#23273d]">
+  <div class="border-t border-[var(--color-line-cool)]">
     <div
-      class="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-[#5c6180] sm:flex-row"
+      class="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-[var(--color-muted)] sm:flex-row"
     >
       <p>© {year} Octogone. {t('footer.rights')}</p>
       <p>{t('footer.madeIn')} — Abidjan, Côte d’Ivoire 🇨🇮</p>

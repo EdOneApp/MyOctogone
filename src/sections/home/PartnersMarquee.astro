@@ -12,13 +12,13 @@ const t = useTranslations(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<section class="border-y border-[#23273d] py-14">
+<section class="border-y border-[var(--color-line-cool)] bg-white py-14">
   <div class="container-page">
-    <p class="text-center text-xs uppercase tracking-[0.28em] text-[#5c6180]">
+    <p class="text-center text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-muted)]">
       {t('label.partners')}
     </p>
     <div class="mt-8">
-      <Marquee client:visible items={partners} base={base} duration={42} />
+      <Marquee client:visible items={partners} base={base} duration={44} />
     </div>
   </div>
 </section>

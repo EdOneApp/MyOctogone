@@ -19,13 +19,13 @@ export default function Marquee({ items, duration = 40, base = '' }: Props) {
     items.map((it, i) => (
       <div
         key={`${key}-${i}`}
-        className="mx-4 flex h-16 w-[168px] shrink-0 items-center justify-center rounded-xl border border-white/5 bg-white/[0.03] px-5 opacity-80 transition-all duration-300 hover:border-cyan-300/20 hover:bg-white/[0.06] hover:opacity-100"
+        className="mx-3 flex h-16 w-[168px] shrink-0 items-center justify-center rounded-xl border border-[#e9edf4] bg-white px-5 shadow-[0_1px_2px_rgba(28,41,81,0.04)] transition-all duration-300 hover:border-[#d7ddea] hover:shadow-[0_10px_24px_-12px_rgba(28,41,81,0.18)]"
       >
         <img
           src={`${base}/${it.logo}`}
           alt={it.name}
           loading="lazy"
-          className="max-h-9 w-auto object-contain grayscale transition-[filter] duration-300 hover:grayscale-0"
+          className="max-h-9 w-auto object-contain opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
         />
       </div>
     ));

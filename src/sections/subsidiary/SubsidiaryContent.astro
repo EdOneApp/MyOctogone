@@ -6,7 +6,6 @@ import { subsidiaries } from '../../data/subsidiaries';
 import { projectsBySubsidiary } from '../../data/projects';
 import CardGrid, { type CardItem } from '../../components/react/CardGrid.tsx';
 import Reveal from '../../components/Reveal.astro';
-import GradientText from '../../components/react/GradientText.tsx';
 import CTA from '../CTA.astro';
 
 interface Props {
@@ -24,7 +23,6 @@ const projectItems: CardItem[] = projects.map((p, i) => ({
   description: tf(p.summary, lang),
   href: localizePath(`/projets/${p.slug}`, lang),
   image: p.status === 'verified' ? asset(p.image) : undefined,
-  accent: s.accent,
   tags: p.stack,
   badge: p.award ? tf(p.award, lang) : undefined,
   cta: t('cta.viewProject'),
@@ -35,66 +33,43 @@ const idx = subsidiaries.findIndex((x) => x.slug === s.slug);
 ---
 
 <!-- Hero -->
-<section class="bg-noise relative isolate overflow-hidden">
-  <div class="absolute inset-0 -z-10 overflow-hidden">
-    <div class="absolute inset-0 bg-[#05060a]"></div>
-    <img
-      src={asset(s.heroImage)}
-      alt=""
-      aria-hidden="true"
-      class="absolute right-0 top-0 h-full w-[55%] scale-125 object-cover opacity-[0.06] blur-2xl [mask-image:linear-gradient(90deg,transparent,#000_60%)]"
-    />
-    <div class="bg-grid absolute inset-0 opacity-90"></div>
-    <div
-      class="oct-ring right-[-14rem] top-[-12rem] h-[40rem] w-[40rem]"
-      style={`border-color:${s.accent.from}22`}
-    >
-    </div>
-    <div
-      class="glow-blob left-[-6%] top-[8%] h-[42rem] w-[42rem]"
-      style={`background: radial-gradient(circle, ${s.accent.from}bb, transparent 62%)`}
-    >
-    </div>
-    <div
-      class="glow-blob right-[-4%] bottom-[-10%] h-[34rem] w-[34rem]"
-      style={`background: radial-gradient(circle, ${s.accent.to}99, transparent 62%)`}
-    >
-    </div>
-    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#05060a] to-transparent"></div>
-  </div>
+<section class="relative overflow-hidden bg-[var(--color-cream)]">
+  <div class="dot-grid absolute inset-0 opacity-60"></div>
+  <div class="blob right-[-6%] top-[4%] h-[28rem] w-[28rem]" style="background: rgba(245,166,35,0.2)"></div>
 
-  <div class="container-page relative flex min-h-[78vh] flex-col justify-center pb-20 pt-36">
+  <div class="container-page relative pb-16 pt-36 lg:pt-44">
     <Reveal>
-      <a href={`${localizePath('/', lang)}#filiales`} class="link-arrow mb-8 text-[#8b90ad]">
+      <a href={`${localizePath('/', lang)}#filiales`} class="link-arrow mb-8 text-[var(--color-muted)]">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
         {t('label.subsidiaries')}
       </a>
-      <div class="flex items-center gap-3">
-        <span
-          class="clip-octagon-sm inline-flex items-center px-3 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.2em]"
-          style={`color:${s.accent.from}; border:1px solid ${s.accent.from}40; background:${s.accent.from}12`}
-        >
-          {t('label.subsidiary')} {String(idx + 1).padStart(2, '0')} / 08
+    </Reveal>
+
+    <div class="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+      <div>
+        <span class="chip chip-amber">
+          {t('label.subsidiary')} {String(idx + 1).padStart(2, '0')} / 08 · {tf(s.sector, lang)}
         </span>
-        <span class="text-xs uppercase tracking-[0.24em] text-[#5c6180]">{tf(s.sector, lang)}</span>
+        <h1 class="mt-5 font-display text-[clamp(2.4rem,5.6vw,4.2rem)] font-bold leading-[1.06] text-[var(--color-ink)]">
+          {s.name}
+        </h1>
+        <Reveal delay={0.1}>
+          <p class="mt-5 max-w-xl text-lg leading-relaxed text-[var(--color-body)]">{tf(s.tagline, lang)}</p>
+        </Reveal>
       </div>
-    </Reveal>
+      <div class="icon-tile hidden h-40 w-40 shrink-0 lg:grid">
+        <img src={asset(s.icon)} alt="" aria-hidden="true" class="h-24 w-24 object-contain" />
+      </div>
+    </div>
 
-    <h1 class="mt-6 max-w-4xl font-display text-[clamp(2.4rem,6vw,4.6rem)] font-bold leading-[1.04] text-white">
-      <GradientText client:load text={s.name} />
-    </h1>
-    <Reveal delay={0.12}>
-      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[#c7cbe0]">{tf(s.tagline, lang)}</p>
-    </Reveal>
-
-    <Reveal delay={0.2} class="mt-10 flex flex-wrap gap-3">
+    <Reveal delay={0.18} class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
         s.figures.map((f) => (
-          <div class="glass clip-octagon-sm px-5 py-3">
-            <div class="font-display text-xl font-bold text-white">{f.value}</div>
-            <div class="text-[0.68rem] uppercase tracking-[0.14em] text-[#5c6180]">
+          <div class="card p-5">
+            <div class="font-display text-2xl font-bold text-[var(--color-navy)]">{f.value}</div>
+            <div class="mt-1 text-[0.7rem] uppercase tracking-[0.12em] text-[var(--color-muted)]">
               {tf(f.label, lang)}
             </div>
           </div>
@@ -105,33 +80,30 @@ const idx = subsidiaries.findIndex((x) => x.slug === s.slug);
 </section>
 
 <!-- Intro + capabilities -->
-<section class="py-24 sm:py-28">
+<section class="section bg-white">
   <div class="container-page grid gap-14 lg:grid-cols-[1fr_1.1fr]">
     <div class="lg:sticky lg:top-28 lg:self-start">
       <Reveal>
         <span class="eyebrow">{t('nav.group')}</span>
         <div class="mt-5 space-y-4">
-          {s.intro.map((para) => <p class="text-[#c7cbe0]">{tf(para, lang)}</p>)}
+          {s.intro.map((para) => <p class="text-[var(--color-body)]">{tf(para, lang)}</p>)}
         </div>
       </Reveal>
     </div>
 
     <Reveal stagger>
-      <h2 class="mb-6 font-display text-2xl font-bold text-white">{t('label.capabilities')}</h2>
+      <h2 class="mb-6 font-display text-2xl font-bold text-[var(--color-ink)]">{t('label.capabilities')}</h2>
       <div class="grid gap-4 sm:grid-cols-2">
         {
           s.capabilities.map((c) => (
-            <div class="glass clip-octagon-sm h-full p-5">
-              <div
-                class="clip-octagon-sm mb-3 grid h-9 w-9 place-items-center"
-                style={`background:${s.accent.from}18; color:${s.accent.from}`}
-              >
+            <div class="card p-5">
+              <div class="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-[var(--color-amber-100)] text-[var(--color-amber-600)]">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M7.5 3h9L21 7.5v9L16.5 21h-9L3 16.5v-9L7.5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
-              <h3 class="font-display text-base font-semibold text-white">{tf(c.title, lang)}</h3>
-              <p class="mt-1.5 text-sm leading-relaxed text-[#8b90ad]">{tf(c.description, lang)}</p>
+              <h3 class="font-display text-base font-semibold text-[var(--color-ink)]">{tf(c.title, lang)}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-[var(--color-body)]">{tf(c.description, lang)}</p>
             </div>
           ))
         }
@@ -143,11 +115,11 @@ const idx = subsidiaries.findIndex((x) => x.slug === s.slug);
 <!-- Projects -->
 {
   projectItems.length > 0 && (
-    <section class="py-16 sm:py-20">
+    <section class="section bg-[var(--color-cream)]">
       <div class="container-page">
         <Reveal>
           <span class="eyebrow">{t('label.projects')}</span>
-          <h2 class="mt-5 font-display text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-white">
+          <h2 class="mt-5 font-display text-[clamp(1.8rem,4vw,2.6rem)] font-bold text-[var(--color-ink)]">
             {lang === 'fr' ? 'Réalisations de la filiale' : 'Work from this subsidiary'}
           </h2>
         </Reveal>
@@ -160,9 +132,9 @@ const idx = subsidiaries.findIndex((x) => x.slug === s.slug);
 }
 
 <!-- Other subsidiaries -->
-<section class="py-16 sm:py-20">
+<section class="section bg-white">
   <div class="container-page">
-    <h2 class="font-display text-xs font-semibold uppercase tracking-[0.22em] text-[#5c6180]">
+    <h2 class="font-display text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)]">
       {t('label.subsidiaries')}
     </h2>
     <div class="mt-6 flex flex-wrap gap-3">
@@ -170,7 +142,7 @@ const idx = subsidiaries.findIndex((x) => x.slug === s.slug);
         others.map((o) => (
           <a
             href={localizePath(`/filiales/${o.slug}`, lang)}
-            class="chip !px-4 !py-2 transition-colors hover:border-cyan-400/60 hover:text-white"
+            class="chip !px-4 !py-2 transition-colors hover:border-[var(--color-navy)] hover:text-[var(--color-navy)]"
           >
             {tf(o.sector, lang)}
           </a>

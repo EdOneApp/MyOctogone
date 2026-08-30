@@ -6,7 +6,6 @@ import { projectsBySubsidiary } from '../../data/projects';
 import { subsidiaryBySlug } from '../../data/subsidiaries';
 import CardGrid, { type CardItem } from '../../components/react/CardGrid.tsx';
 import Reveal from '../../components/Reveal.astro';
-import GradientText from '../../components/react/GradientText.tsx';
 import CTA from '../CTA.astro';
 
 interface Props {
@@ -27,7 +26,6 @@ const relatedItems: CardItem[] = related.map((r) => ({
   description: tf(r.summary, lang),
   href: localizePath(`/projets/${r.slug}`, lang),
   image: r.status === 'verified' ? asset(r.image) : undefined,
-  accent: parent.accent,
   tags: r.stack,
   cta: t('cta.viewProject'),
 }));
@@ -46,19 +44,11 @@ const hostname = (u?: string) => {
 
 <article>
   <!-- Hero -->
-  <section class="relative isolate overflow-hidden pt-36">
-    <div class="absolute inset-0 -z-10">
-      <div class="bg-grid absolute inset-0 opacity-50"></div>
-      <div
-        class="glow-blob left-[12%] top-[10%] h-[30rem] w-[30rem]"
-        style={`background: radial-gradient(circle, ${parent.accent.from}44, transparent 62%)`}
-      >
-      </div>
-    </div>
-
-    <div class="container-page">
+  <section class="relative overflow-hidden bg-[var(--color-cream)]">
+    <div class="dot-grid absolute inset-0 opacity-60"></div>
+    <div class="container-page relative pb-14 pt-36 lg:pt-44">
       <Reveal>
-        <a href={localizePath(`/filiales/${parent.slug}`, lang)} class="link-arrow mb-8 text-[#8b90ad]">
+        <a href={localizePath(`/filiales/${parent.slug}`, lang)} class="link-arrow mb-8 text-[var(--color-muted)]">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
@@ -69,32 +59,28 @@ const hostname = (u?: string) => {
       <div class="flex flex-wrap items-center gap-3">
         <span class="chip">{tf(p.category, lang)}</span>
         {p.year && <span class="chip">{t('label.year')} {p.year}</span>}
-        {
-          p.award && (
-            <span class="chip border-cyan-300/40 text-cyan-200">🏆 {tf(p.award, lang)}</span>
-          )
-        }
+        {p.award && <span class="chip chip-amber">🏆 {tf(p.award, lang)}</span>}
       </div>
 
-      <h1 class="mt-6 max-w-4xl font-display text-[clamp(2.4rem,6vw,4.4rem)] font-bold leading-[1.05] text-white">
-        <GradientText client:load text={p.title} />
+      <h1 class="mt-6 max-w-4xl font-display text-[clamp(2.3rem,5.4vw,4rem)] font-bold leading-[1.06] text-[var(--color-ink)]">
+        {p.title}
       </h1>
       <Reveal delay={0.1}>
-        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[#c7cbe0]">{tf(p.summary, lang)}</p>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-body)]">{tf(p.summary, lang)}</p>
       </Reveal>
 
-      <Reveal delay={0.18}>
+      <Reveal delay={0.16}>
         <div class="mt-8 flex flex-wrap gap-4">
           {
             p.url && (
-              <a href={p.url} target="_blank" rel="noopener noreferrer" class="btn btn-primary clip-octagon-sm">
+              <a href={p.url} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                 {t('cta.viewProject')} · {hostname(p.url)}
               </a>
             )
           }
           {
             p.repo && (
-              <a href={p.repo} target="_blank" rel="noopener noreferrer" class="btn btn-ghost clip-octagon-sm">
+              <a href={p.repo} target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
                 {t('cta.viewRepo')}
               </a>
             )
@@ -103,67 +89,41 @@ const hostname = (u?: string) => {
       </Reveal>
     </div>
 
-    <div class="container-page mt-14">
+    <div class="container-page relative pb-16">
       <Reveal>
-        <div class="clip-octagon relative overflow-hidden border border-[#23273d]">
+        <div class="clip-octagon overflow-hidden border border-[var(--color-line-cool)] bg-white shadow-[var(--shadow-lift)]">
           {
             showHeroImage ? (
               <img src={asset(p.image)} alt={p.title} class="w-full object-cover" />
             ) : (
-              <div
-                class="relative aspect-[16/7] w-full"
-                style={`background: radial-gradient(120% 120% at 12% 0%, ${parent.accent.from}33, transparent 55%), radial-gradient(120% 120% at 100% 100%, ${parent.accent.to}28, transparent 55%), #080a12`}
-              >
-                <svg
-                  class="absolute inset-0 h-full w-full opacity-50"
-                  viewBox="0 0 1200 520"
-                  fill="none"
-                  preserveAspectRatio="xMidYMid slice"
+              <div class="dot-grid relative aspect-[16/7] w-full bg-[var(--color-cream-2)]">
+                <img
+                  src={asset(parent.icon)}
+                  alt=""
                   aria-hidden="true"
-                >
-                  <defs>
-                    <pattern id="ph-dots" width="26" height="26" patternUnits="userSpaceOnUse">
-                      <circle cx="1.6" cy="1.6" r="1.6" fill={parent.accent.from} fill-opacity="0.16" />
-                    </pattern>
-                  </defs>
-                  <rect width="1200" height="520" fill="url(#ph-dots)" />
-                  <path
-                    d="M820 90h150l90 90v150l-90 90H820l-90-90V180z"
-                    stroke={parent.accent.from}
-                    stroke-opacity="0.32"
-                    stroke-width="2"
-                  />
-                  <path
-                    d="M880 150h90l54 54v90l-54 54h-90l-54-54v-90z"
-                    stroke={parent.accent.to}
-                    stroke-opacity="0.26"
-                    stroke-width="2"
-                  />
-                </svg>
-                <span
-                  class="absolute bottom-6 left-8 font-display text-sm font-semibold uppercase tracking-[0.24em] text-white/45"
-                >
+                  class="absolute right-10 top-1/2 hidden h-28 w-28 -translate-y-1/2 object-contain opacity-90 sm:block"
+                />
+                <span class="absolute bottom-6 left-8 font-display text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-faint)]">
                   {tf(p.category, lang)}
                 </span>
               </div>
             )
           }
-          <div class="absolute inset-0 ring-1 ring-inset ring-white/5"></div>
         </div>
       </Reveal>
     </div>
   </section>
 
   <!-- Body -->
-  <section class="py-20 sm:py-24">
+  <section class="section bg-white">
     <div class="container-page grid gap-14 lg:grid-cols-[1.4fr_0.6fr]">
       <Reveal class="space-y-5">
-        {p.description.map((para) => <p class="text-lg leading-relaxed text-[#c7cbe0]">{tf(para, lang)}</p>)}
+        {p.description.map((para) => <p class="text-lg leading-relaxed text-[var(--color-body)]">{tf(para, lang)}</p>)}
       </Reveal>
 
       <aside class="space-y-8">
         <div>
-          <h2 class="font-display text-xs font-semibold uppercase tracking-[0.2em] text-[#5c6180]">
+          <h2 class="font-display text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
             {t('label.stack')}
           </h2>
           <div class="mt-3 flex flex-wrap gap-1.5">
@@ -171,12 +131,12 @@ const hostname = (u?: string) => {
           </div>
         </div>
         <div>
-          <h2 class="font-display text-xs font-semibold uppercase tracking-[0.2em] text-[#5c6180]">
+          <h2 class="font-display text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
             {t('label.subsidiary')}
           </h2>
           <a
             href={localizePath(`/filiales/${parent.slug}`, lang)}
-            class="mt-3 inline-block font-display text-base font-semibold text-white hover:text-cyan-300"
+            class="mt-3 inline-block font-display text-base font-semibold text-[var(--color-navy)] hover:text-[var(--color-amber-600)]"
           >
             {parent.name}
           </a>
@@ -184,15 +144,10 @@ const hostname = (u?: string) => {
         {
           p.url && (
             <div>
-              <h2 class="font-display text-xs font-semibold uppercase tracking-[0.2em] text-[#5c6180]">
+              <h2 class="font-display text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
                 {t('label.online')}
               </h2>
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mt-3 inline-block text-sm text-cyan-300 hover:underline"
-              >
+              <a href={p.url} target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-sm text-[var(--color-navy)] hover:underline">
                 {hostname(p.url)}
               </a>
             </div>
@@ -204,10 +159,10 @@ const hostname = (u?: string) => {
 
   {
     relatedItems.length > 0 && (
-      <section class="pb-8">
+      <section class="section bg-[var(--color-cream)] pt-0">
         <div class="container-page">
           <Reveal>
-            <h2 class="font-display text-xl font-bold text-white">{t('label.relatedProjects')}</h2>
+            <h2 class="font-display text-xl font-bold text-[var(--color-ink)]">{t('label.relatedProjects')}</h2>
           </Reveal>
           <div class="mt-10">
             <CardGrid client:visible items={relatedItems} columns="sm:grid-cols-2 lg:grid-cols-3" />

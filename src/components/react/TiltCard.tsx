@@ -15,7 +15,7 @@ type Props = {
   max?: number;
 };
 
-export default function TiltCard({ href, children, className = '', max = 7 }: Props) {
+export default function TiltCard({ href, children, className = '', max = 4 }: Props) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLAnchorElement>(null);
 
@@ -68,7 +68,7 @@ export default function TiltCard({ href, children, className = '', max = 7 }: Pr
           background: useTransform(
             [glareX, glareY],
             ([x, y]) =>
-              `radial-gradient(220px circle at ${x} ${y}, rgba(34,211,238,0.18), transparent 60%)`
+              `radial-gradient(240px circle at ${x} ${y}, rgba(245,166,35,0.14), transparent 62%)`
           ),
         }}
       />

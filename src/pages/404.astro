@@ -7,22 +7,14 @@ const t = useTranslations(lang);
 ---
 
 <BaseLayout title={`${t('404.title')} — Octogone`} description={t('404.body')}>
-  <section class="relative isolate flex min-h-[80vh] items-center overflow-hidden">
-    <div class="absolute inset-0 -z-10">
-      <div class="bg-grid absolute inset-0 opacity-60"></div>
-      <div
-        class="glow-blob left-1/2 top-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2"
-        style="background: radial-gradient(circle, rgba(37,99,235,0.35), transparent 62%)"
-      >
-      </div>
-    </div>
-    <div class="container-page text-center">
-      <p class="font-display text-[clamp(4rem,18vw,12rem)] font-bold leading-none text-white">404</p>
-      <h1 class="mt-4 font-display text-2xl font-bold text-white">{t('404.title')}</h1>
-      <p class="mx-auto mt-3 max-w-md text-[#8b90ad]">{t('404.body')}</p>
-      <a href={localizePath('/', lang)} class="btn btn-primary clip-octagon-sm mt-8">
-        {t('404.cta')}
-      </a>
+  <section class="relative flex min-h-[80vh] items-center overflow-hidden bg-[var(--color-cream)]">
+    <div class="dot-grid absolute inset-0 opacity-60"></div>
+    <div class="blob left-1/2 top-1/2 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2" style="background: rgba(245,166,35,0.2)"></div>
+    <div class="container-page relative text-center">
+      <p class="font-display text-[clamp(4rem,18vw,11rem)] font-bold leading-none text-[var(--color-navy)]">404</p>
+      <h1 class="mt-4 font-display text-2xl font-bold text-[var(--color-ink)]">{t('404.title')}</h1>
+      <p class="mx-auto mt-3 max-w-md text-[var(--color-body)]">{t('404.body')}</p>
+      <a href={localizePath('/', lang)} class="btn btn-primary mt-8">{t('404.cta')}</a>
     </div>
   </section>
 </BaseLayout>

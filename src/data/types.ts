@@ -18,7 +18,9 @@ export interface Subsidiary {
   name: string;
   sector: Localized;
   tagline: Localized;
-  /** Path under /assets. */
+  /** Amber line-icon, path under /assets. */
+  icon: string;
+  /** Full branded carousel slide, path under /assets (used for og:image). */
   heroImage: string;
   /** Accent hue used for gradients on this subsidiary's pages. */
   accent: { from: string; to: string };

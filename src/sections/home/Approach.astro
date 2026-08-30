@@ -33,38 +33,38 @@ const steps = [
 ];
 ---
 
-<section class="relative py-24 sm:py-32">
+<section class="section bg-[var(--color-cream)]">
   <div class="container-page">
     <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
       <div class="lg:sticky lg:top-28 lg:self-start">
         <Reveal>
           <span class="eyebrow">{t('label.approach')}</span>
-          <h2 class="mt-5 font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white">
+          <h2 class="mt-5 font-display text-[clamp(1.9rem,4vw,2.9rem)] font-bold text-[var(--color-ink)]">
             {lang === 'fr' ? 'Du premier atelier à l’exploitation' : 'From the first workshop to operations'}
           </h2>
-          <p class="mt-5 max-w-md text-[#8b90ad]">{t('home.approach.subtitle')}</p>
+          <p class="mt-5 max-w-md text-[var(--color-body)]">{t('home.approach.subtitle')}</p>
         </Reveal>
       </div>
 
       <Reveal stagger class="relative">
         <div
-          class="absolute left-[19px] top-2 bottom-2 w-px bg-gradient-to-b from-cyan-400/60 via-[#23273d] to-transparent"
+          class="absolute left-[19px] bottom-4 top-4 w-px bg-[var(--color-line)]"
           aria-hidden="true"
         >
         </div>
-        <ol class="space-y-8">
+        <ol class="space-y-7">
           {
             steps.map((s, i) => (
               <li class="relative pl-14">
                 <span
-                  class="clip-octagon-sm absolute left-0 top-0 grid h-10 w-10 place-items-center border border-cyan-300/30 bg-[#0e1120] font-display text-sm font-semibold text-cyan-300"
+                  class="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-xl border border-[var(--color-line)] bg-white font-display text-sm font-semibold text-[var(--color-navy)]"
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h3 class="font-display text-lg font-semibold text-white">
+                <h3 class="font-display text-lg font-semibold text-[var(--color-ink)]">
                   {s[lang].title}
                 </h3>
-                <p class="mt-2 text-sm leading-relaxed text-[#8b90ad]">{s[lang].body}</p>
+                <p class="mt-1.5 text-sm leading-relaxed text-[var(--color-body)]">{s[lang].body}</p>
               </li>
             ))
           }

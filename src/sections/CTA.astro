@@ -20,28 +20,31 @@ const sub =
     : 'Write to us: we route your request to the right team and get back to you within 48 business hours.');
 ---
 
-<section class="py-24 sm:py-32">
+<section class="section bg-white">
   <div class="container-page">
     <Reveal>
       <div
-        class="clip-octagon relative overflow-hidden border border-[#23273d] bg-[#0a0c14] px-8 py-16 text-center sm:px-16 sm:py-20"
+        class="clip-octagon relative overflow-hidden bg-[var(--color-navy)] px-8 py-16 text-center sm:px-16 sm:py-20"
       >
+        <div class="dot-grid absolute inset-0 opacity-[0.15]"></div>
         <div
-          class="glow-blob left-1/2 top-0 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/3"
-          style="background: radial-gradient(circle, rgba(37,99,235,0.35), transparent 65%)"
+          class="blob left-1/2 top-0 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/3"
+          style="background: rgba(245, 166, 35, 0.35)"
         >
         </div>
-        <div class="bg-grid absolute inset-0 opacity-40"></div>
         <div class="relative mx-auto max-w-2xl">
-          <h2 class="font-display text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-white">
+          <h2 class="font-display text-[clamp(1.7rem,4vw,2.6rem)] font-bold text-white">
             {heading}
           </h2>
-          <p class="mt-5 text-[#8b90ad]">{sub}</p>
+          <p class="mt-5 text-[#c8cde0]">{sub}</p>
           <div class="mt-9 flex flex-wrap justify-center gap-4">
-            <a href={localizePath('/contact', lang)} class="btn btn-primary clip-octagon-sm">
+            <a href={localizePath('/contact', lang)} class="btn btn-amber">
               {t('cta.talk')}
             </a>
-            <a href={localizePath('/a-propos', lang)} class="btn btn-ghost clip-octagon-sm">
+            <a
+              href={localizePath('/a-propos', lang)}
+              class="btn border-2 border-white/25 bg-transparent text-white hover:border-white"
+            >
               {t('nav.group')}
             </a>
           </div>

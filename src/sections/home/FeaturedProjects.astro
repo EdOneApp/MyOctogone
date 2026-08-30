@@ -24,36 +24,22 @@ const items: CardItem[] = featuredProjects().map((p, i) => ({
 }));
 ---
 
-<section id="realisations" class="relative scroll-mt-24 py-24 sm:py-32">
-  <div
-    class="glow-blob left-1/2 top-10 h-[30rem] w-[30rem] -translate-x-1/2"
-    style="background: radial-gradient(circle, rgba(34,211,238,0.16), transparent 65%)"
-  >
-  </div>
-
-  <div class="container-page relative">
+<section id="realisations" class="section scroll-mt-24 bg-white">
+  <div class="container-page">
     <div class="flex flex-wrap items-end justify-between gap-6">
       <div class="max-w-2xl">
         <Reveal>
           <span class="eyebrow">{t('label.projects')}</span>
-          <h2 class="mt-5 font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white">
+          <h2 class="mt-5 font-display text-[clamp(1.9rem,4vw,2.9rem)] font-bold text-[var(--color-ink)]">
             {t('home.featured.title')}
           </h2>
-          <p class="mt-5 text-[#8b90ad]">{t('home.featured.subtitle')}</p>
+          <p class="mt-5 text-[var(--color-body)]">{t('home.featured.subtitle')}</p>
         </Reveal>
       </div>
-      <a
-        href={localizePath('/filiales/technologies', lang)}
-        class="link-arrow"
-      >
+      <a href={localizePath('/filiales/technologies', lang)} class="link-arrow">
         {t('cta.allProjects')}
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path
-            d="M3 8h10M9 4l4 4-4 4"
-            stroke="currentColor"
-            stroke-width="1.6"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </a>
     </div>

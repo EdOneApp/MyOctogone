@@ -12,12 +12,12 @@ const { lang } = Astro.props;
 const locale = lang === 'fr' ? 'fr-FR' : 'en-US';
 ---
 
-<section class="relative border-y border-[#23273d] bg-[#07080e]">
-  <div class="container-page grid grid-cols-2 gap-px overflow-hidden lg:grid-cols-4">
+<section class="border-y border-[var(--color-line-cool)] bg-white">
+  <div class="container-page grid grid-cols-2 divide-x divide-y divide-[var(--color-line-cool)] sm:divide-y-0 lg:grid-cols-4">
     {
       groupStats.map((s, i) => (
-        <Reveal delay={i * 0.08} class="relative bg-[#07080e] p-8 text-center sm:p-10">
-          <div class="font-display text-[clamp(2.2rem,5vw,3.4rem)] font-bold text-white">
+        <Reveal delay={i * 0.08} class="p-8 text-center sm:p-10">
+          <div class="font-display text-[clamp(2.2rem,5vw,3.2rem)] font-bold text-[var(--color-navy)]">
             <Counter
               client:visible
               value={s.value}
@@ -26,7 +26,7 @@ const locale = lang === 'fr' ? 'fr-FR' : 'en-US';
               locale={locale}
             />
           </div>
-          <div class="mt-2 text-xs uppercase tracking-[0.18em] text-[#5c6180]">
+          <div class="mt-2 text-xs uppercase tracking-[0.16em] text-[var(--color-muted)]">
             {tf(s.label, lang)}
           </div>
         </Reveal>
