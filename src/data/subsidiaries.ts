@@ -76,7 +76,7 @@ export const subsidiaries: Subsidiary[] = [
       },
     ],
     figures: [
-      { label: { fr: 'Projets livrés', en: 'Projects delivered' }, value: '14+' },
+      { label: { fr: 'Projets livrés', en: 'Projects delivered' }, value: '17+' },
       { label: { fr: 'Distinctions', en: 'Awards' }, value: '3' },
       { label: { fr: 'Pays couverts (UEMOA)', en: 'WAEMU countries covered' }, value: '8' },
       { label: { fr: 'Stack principale', en: 'Core stack' }, value: 'Django · Flutter' },
@@ -116,8 +116,8 @@ export const subsidiaries: Subsidiary[] = [
         en: 'Octogone BTP delivers building and infrastructure projects for public and private clients: office buildings, community facilities, roads and utility networks.',
       },
       {
-        fr: 'La filiale pilote l’ensemble de la chaîne — études, gros œuvre, second œuvre, VRD — avec une culture de la sécurité sur chantier et un suivi budgétaire serré.',
-        en: 'The subsidiary manages the full chain — studies, structural work, finishing, earthworks and utilities — with a strong site-safety culture and tight budget control.',
+        fr: 'La filiale pilote l’ensemble de la chaîne, études, gros œuvre, second œuvre, VRD, avec une culture de la sécurité sur chantier et un suivi budgétaire serré.',
+        en: 'The subsidiary manages the full chain, studies, structural work, finishing, earthworks and utilities, with a strong site-safety culture and tight budget control.',
       },
     ],
     capabilities: [
@@ -507,8 +507,8 @@ export const subsidiaries: Subsidiary[] = [
         en: 'Octogone Sécurité provides physical and electronic site protection: guarding, remote monitoring, access control, video surveillance and security consulting.',
       },
       {
-        fr: 'La filiale intègre les technologies du groupe — biométrie, supervision temps réel, analytique vidéo — pour des dispositifs mesurables et pilotables.',
-        en: 'The subsidiary integrates the group’s technologies — biometrics, real-time supervision, video analytics — for measurable, manageable protection.',
+        fr: 'La filiale intègre les technologies du groupe, biométrie, supervision temps réel, analytique vidéo, pour des dispositifs mesurables et pilotables.',
+        en: 'The subsidiary integrates the group’s technologies, biometrics, real-time supervision, video analytics, for measurable, manageable protection.',
       },
     ],
     capabilities: [

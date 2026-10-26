@@ -1,55 +1,8 @@
 ---
-import { useTranslations, localizePath } from '../i18n/utils';
+import { localizePath } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
-import Reveal from '../components/Reveal.astro';
-
-interface Props {
-  lang: Lang;
-  title?: string;
-  subtitle?: string;
-}
+interface Props { lang: Lang; title?: string; subtitle?: string; }
 const { lang, title, subtitle } = Astro.props;
-const t = useTranslations(lang);
-
-const heading =
-  title ?? (lang === 'fr' ? 'Un projet, une filiale, une ambition ?' : 'A project, a subsidiary, an ambition?');
-const sub =
-  subtitle ??
-  (lang === 'fr'
-    ? 'Écrivez-nous : nous orientons votre demande vers la bonne équipe et revenons vers vous sous 48 heures ouvrées.'
-    : 'Write to us: we route your request to the right team and get back to you within 48 business hours.');
+const fr = lang === 'fr';
 ---
-
-<section class="section bg-white">
-  <div class="container-page">
-    <Reveal>
-      <div
-        class="clip-octagon relative overflow-hidden bg-[var(--color-navy)] px-8 py-16 text-center sm:px-16 sm:py-20"
-      >
-        <div class="dot-grid absolute inset-0 opacity-[0.15]"></div>
-        <div
-          class="blob left-1/2 top-0 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/3"
-          style="background: rgba(245, 166, 35, 0.35)"
-        >
-        </div>
-        <div class="relative mx-auto max-w-2xl">
-          <h2 class="font-display text-[clamp(1.7rem,4vw,2.6rem)] font-bold text-white">
-            {heading}
-          </h2>
-          <p class="mt-5 text-[#c8cde0]">{sub}</p>
-          <div class="mt-9 flex flex-wrap justify-center gap-4">
-            <a href={localizePath('/contact', lang)} class="btn btn-amber">
-              {t('cta.talk')}
-            </a>
-            <a
-              href={localizePath('/a-propos', lang)}
-              class="btn border-2 border-white/25 bg-transparent text-white hover:border-white"
-            >
-              {t('nav.group')}
-            </a>
-          </div>
-        </div>
-      </div>
-    </Reveal>
-  </div>
-</section>
+<section class="contact-banner"><div class="container-page"><span class="eyebrow">{fr ? 'LA SUITE COMMENCE AVEC VOUS' : 'WHAT COMES NEXT STARTS WITH YOU'}</span><div class="contact-banner-row"><div><h2>{title || (fr ? 'Et si on avançait' : 'Let’s move forward')}<br /><em>{fr ? 'ensemble ?' : 'together.'}</em></h2><p>{subtitle || (fr ? 'Une idée, un besoin, un projet. Prenons le temps d’en parler.' : 'An idea, a need, a project. Let’s take the time to talk.')}</p></div><a href={localizePath('/contact',lang)} class="contact-circle" aria-label={fr ? 'Nous contacter' : 'Contact us'}>↗</a></div></div></section>

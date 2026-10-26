@@ -40,6 +40,7 @@ export interface Project {
   description: Localized[];
   stack: string[];
   image: string;
+  mobileImage?: string;
   url?: string;
   repo?: string;
   award?: Localized;

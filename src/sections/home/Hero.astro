@@ -1,111 +1,24 @@
 ---
-import { useTranslations, localizePath, asset } from '../../i18n/utils';
+import { asset, localizePath } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
-import Reveal from '../../components/Reveal.astro';
-
-interface Props {
-  lang: Lang;
-}
+interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const t = useTranslations(lang);
-
-const sectors =
-  lang === 'fr'
-    ? ['Technologie', 'BTP', 'Logistique', 'Finance', 'Agro-alimentaire', 'Transport', 'Formation', 'Sécurité']
-    : ['Technology', 'Construction', 'Logistics', 'Finance', 'Agri-food', 'Transport', 'Training', 'Security'];
+const fr = lang === 'fr';
 ---
-
-<section class="relative overflow-hidden bg-[var(--color-cream)]">
-  <div class="dot-grid absolute inset-0 opacity-60"></div>
-  <div
-    class="blob right-[-6%] top-[-8%] h-[32rem] w-[32rem]"
-    style="background: rgba(245, 166, 35, 0.22)"
-  >
+<section class="editorial-hero kinetic-hero">
+ <img class="hero-photo" src={asset('images/architecture.jpg')} alt="" width="1920" height="1280" fetchpriority="high" />
+ <div class="hero-shade"></div><div class="hero-aurora" aria-hidden="true"></div><div class="hero-mesh" aria-hidden="true"></div>
+ <div class="container-page kinetic-inner">
+  <div class="kinetic-copy"><p class="hero-kicker"><span></span>{fr ? 'OCTOGONE · LA BOÎTE À GÉNIES' : 'OCTOGONE · A HOME FOR INGENUITY'}</p><h1><span>{fr ? 'L’audace' : 'Bold ideas.'}</span><span>{fr ? 'd’imaginer.' : 'Real impact.'}</span><em>{fr ? 'La force d’agir.' : 'Built together.'}</em></h1><p class="kinetic-intro">{fr ? 'Du numérique aux infrastructures, nous connectons huit métiers pour transformer vos ambitions en réalisations.' : 'From digital products to infrastructure, we connect eight sectors to turn your ambitions into reality.'}</p><div class="kinetic-actions"><a href="#realisations" class="btn btn-amber">{fr ? 'Voir nos projets' : 'Explore our projects'} <span aria-hidden="true">↗</span></a><a href={localizePath('/a-propos',lang)} class="hero-about">{fr ? 'Découvrir le groupe' : 'Discover the group'} <span>→</span></a></div><div class="hero-proof"><span class="proof-avatar">08</span><p>{fr ? 'Des métiers qui se complètent.' : 'Complementary expertise.'}<br /><b>{fr ? 'Une ambition qui nous rassemble.' : 'One ambition that unites us.'}</b></p></div></div>
+  <div class="hero-stage" aria-label={fr ? 'Aperçus de nos applications Edone et BanToo' : 'Previews of our Edone and BanToo applications'}>
+   <div class="stage-orbit orbit-a" aria-hidden="true"></div><div class="stage-orbit orbit-b" aria-hidden="true"></div><span class="stage-spark spark-one" aria-hidden="true">✳</span><span class="stage-spark spark-two" aria-hidden="true">✳</span>
+   <a href={localizePath('/projets/edone',lang)} class="floating-browser" data-depth="0.65"><div class="browser-chrome"><i></i><i></i><i></i><span>edone · {fr ? 'gestion scolaire' : 'school management'}</span><b>↗</b></div><div class="browser-screen"><img src={asset('images/portfolio/edone.webp')} alt={fr ? 'Capture réelle de la plateforme Edone' : 'Real screenshot of the Edone platform'} width="1500" height="950" /></div><div class="browser-bottom"><b>Edone</b><span>Web · Android · iOS</span><span class="live-dot"></span></div></a>
+   <a class="floating-phone" data-depth="1.1" href={localizePath('/projets/edone',lang)} aria-label={fr ? 'Découvrir Edone sur mobile' : 'Discover Edone on mobile'}><div class="phone-island"></div><img src={asset('images/portfolio/edone-mobile.webp')} alt={fr ? 'Application mobile Edone' : 'Edone mobile app'} width="650" height="1250" /><div class="phone-home"></div></a>
+   <a class="floating-mini" data-depth="0.4" href={localizePath('/projets/bantoo',lang)}><img src={asset('images/portfolio/bantoo.webp')} alt="BanToo" width="320" height="220" /><div><b>BanToo</b><span>{fr ? 'Le quotidien, simplifié.' : 'Everyday life, simplified.'}</span></div><span>↗</span></a>
+   <div class="floating-award" data-depth="0.8"><span>✦</span><div><b>Moov Africa CI</b><small>StartUp Challenge 2025 · 1er prix</small></div></div>
+   <span class="stage-coordinate">ABIDJAN / 05°20′ N · 04°01′ W</span>
   </div>
-  <div
-    class="blob left-[-10%] bottom-[-14%] h-[30rem] w-[30rem]"
-    style="background: rgba(28, 41, 81, 0.08)"
-  >
-  </div>
-
-  <div
-    class="container-page relative grid items-center gap-14 pb-20 pt-36 lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-44"
-  >
-    <div>
-      <Reveal>
-        <span class="eyebrow">Octogone Holding</span>
-      </Reveal>
-
-      <h1 class="mt-6 font-display text-[clamp(2.6rem,6.4vw,4.6rem)] font-bold leading-[1.05] text-[var(--color-ink)]">
-        {t('hero.title.a')}<br />
-        <span class="mark-underline">{t('hero.title.b')}</span>
-      </h1>
-
-      <Reveal delay={0.12}>
-        <p class="mt-7 max-w-xl text-lg leading-relaxed text-[var(--color-body)]">
-          {t('hero.subtitle')}
-        </p>
-      </Reveal>
-
-      <Reveal delay={0.2}>
-        <div class="mt-9 flex flex-wrap items-center gap-4">
-          <a href={`${localizePath('/', lang)}#filiales`} class="btn btn-primary">
-            {t('cta.discover')}
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </a>
-          <a href={localizePath('/contact', lang)} class="btn btn-ghost">
-            {t('cta.talk')}
-          </a>
-        </div>
-      </Reveal>
-
-      <Reveal delay={0.3}>
-        <ul class="mt-12 flex flex-wrap gap-x-5 gap-y-2 border-t border-[var(--color-line)] pt-6">
-          {
-            sectors.map((s) => (
-              <li class="font-display text-xs font-medium uppercase tracking-[0.14em] text-[var(--color-muted)]">
-                {s}
-              </li>
-            ))
-          }
-        </ul>
-      </Reveal>
-    </div>
-
-    <Reveal delay={0.15} class="relative">
-      <div class="relative mx-auto max-w-md lg:max-w-none">
-        <div
-          class="clip-octagon relative overflow-hidden border border-[var(--color-line-cool)] bg-white shadow-[var(--shadow-lift)]"
-        >
-          <video
-            class="aspect-square w-full object-cover"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster={asset('assets/logo.jpeg')}
-            aria-label="Animation du logo Octogone"
-          >
-            <source src={asset('assets/logo-video.mp4')} type="video/mp4" />
-          </video>
-        </div>
-        <div
-          class="absolute -bottom-5 -left-5 hidden rounded-2xl border border-[var(--color-line-cool)] bg-white px-5 py-4 shadow-[var(--shadow-soft)] sm:block"
-        >
-          <div class="font-display text-2xl font-bold text-[var(--color-navy)]">8</div>
-          <div class="text-xs uppercase tracking-[0.12em] text-[var(--color-muted)]">
-            {lang === 'fr' ? 'Filiales' : 'Subsidiaries'}
-          </div>
-        </div>
-        <div
-          class="absolute -right-4 -top-4 h-16 w-16 rounded-2xl bg-[var(--color-amber)]/20"
-          aria-hidden="true"
-        >
-        </div>
-      </div>
-    </Reveal>
-  </div>
+ </div>
+ <div class="container-page kinetic-foot"><span><i></i> {fr ? 'HUIT MÉTIERS. UN MOUVEMENT.' : 'EIGHT SECTORS. ONE MOVEMENT.'}</span><a href="#groupe">{fr ? 'EXPLORER' : 'EXPLORE'} <span>↓</span></a></div>
 </section>
+<div class="expertise-ticker" aria-hidden="true"><div>{[0,1].map(()=> <span>TECHNOLOGIE <b>✳</b> INFRASTRUCTURES <b>✳</b> MOBILITÉ <b>✳</b> FINANCE <b>✳</b> AGRO-ALIMENTAIRE <b>✳</b> FORMATION <b>✳</b></span>)}</div></div>

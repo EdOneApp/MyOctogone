@@ -20,7 +20,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
   data-scrolled="false"
 >
   <div class="container-page flex h-[76px] items-center justify-between gap-6">
-    <a href={home} class="flex items-center gap-2.5" aria-label="Octogone — accueil">
+    <a href={home} class="flex items-center gap-2.5" aria-label="Octogone, accueil">
       <span
         class="grid h-9 w-9 place-items-center rounded-xl bg-[var(--color-navy)] text-[var(--color-amber)]"
       >
@@ -41,7 +41,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
       {
         nav.map((l) => {
           const active =
-            l.href === current || (l.href.includes('#') && current === home);
+            l.href.replace(/\/$/, '') === (current === '/' ? '' : current) || (l.href.includes('#') && current === home.replace(/\/$/, ''));
           return (
             <a
               href={l.href}
@@ -77,17 +77,19 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
   </div>
 </header>
 
-<script is:inline>
-  (() => {
+<script>
+  let cleanup: (() => void) | undefined;
+  const setupHeader = () => {
+    cleanup?.();
     const header = document.getElementById('site-header');
     if (!header) return;
-    const onScroll = () => {
-      header.dataset.scrolled = String(window.scrollY > 12);
-    };
+    const onScroll = () => { header.dataset.scrolled = String(window.scrollY > 12); };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    document.addEventListener('astro:after-swap', onScroll);
-  })();
+    cleanup = () => window.removeEventListener('scroll', onScroll);
+  };
+  document.addEventListener('astro:page-load', setupHeader);
+  document.addEventListener('astro:before-swap', () => cleanup?.());
 </script>
 
 <style>

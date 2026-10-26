@@ -1,43 +1,48 @@
 ---
-import { stripLang } from '../i18n/utils';
+import { stripLang, tf } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
-
-interface Props {
-  title: string;
-  description: string;
-  lang: Lang;
-  image?: string;
-}
-
-const { title, description, lang, image = 'assets/logo.png' } = Astro.props;
-
+import { projects } from '../data/projects';
+import { subsidiaries } from '../data/subsidiaries';
+interface Props { title: string; description: string; lang: Lang; image?: string; noindex?: boolean; }
+const { title, description, lang, image = '/images/og-octogone.jpg', noindex = false } = Astro.props;
 const site = Astro.site ?? new URL('https://myoctogone.com');
-const canonicalPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const canonical = new URL(canonicalPath, site).href;
-const ogImage = new URL(image, site).href;
-
+const origin = site.origin;
+const clean = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonicalPath = clean === '/' ? '/' : `${clean}/`;
+const canonical = new URL(canonicalPath,site).href;
+const ogImage = new URL(image.replace(/^\/?/, '/'),site).href;
 const basePath = stripLang(canonicalPath);
-const frHref = new URL(basePath, site).href;
-const enHref = new URL(basePath === '/' ? '/en' : `/en${basePath}`, site).href;
+const frHref = new URL(basePath,site).href;
+const enHref = new URL(basePath === '/' ? '/en/' : `/en${basePath}`,site).href;
+const pageTitle = title.length > 70 ? `${title.split(/[,|]/)[0].trim().slice(0,56)} | Octogone` : title;
+const descriptionText = description.replace(/\s+/g,' ').trim();
+const summary = descriptionText.length > 165 ? descriptionText.slice(0,162).replace(/\s+\S*$/, '') + '…' : descriptionText;
+const fr = lang === 'fr';
+const project = basePath.startsWith('/projets/') ? projects.find(p=>p.slug === basePath.split('/')[2] && p.status==='verified') : undefined;
+const subsidiary = basePath.startsWith('/filiales/') ? subsidiaries.find(s=>s.slug===basePath.split('/')[2]) : undefined;
+const orgId = `${origin}/#organization`;
+const websiteId = `${origin}/#website`;
+const home = fr ? `${origin}/` : `${origin}/en/`;
+const crumbs: {name:string;item:string}[] = [{name:fr?'Accueil':'Home',item:home}];
+if(project){const parent = subsidiaries.find(s=>s.slug===project.subsidiarySlug);if(parent)crumbs.push({name:parent.name,item:`${home}filiales/${parent.slug}/`});}
+if(basePath!=='/')crumbs.push({name:project?.title ?? subsidiary?.name ?? pageTitle.replace(/[,|]\s*Octogone$/, '').trim(),item:canonical});
+const graph: Record<string,unknown>[] = [
+ {'@type':'Organization','@id':orgId,name:'Octogone',url:`${origin}/`,logo:{'@type':'ImageObject',url:`${origin}/assets/logo.png`},email:'octogone.techs@gmail.com',telephone:'+2250748733365',address:{'@type':'PostalAddress',addressLocality:'Cocody, Abidjan',addressCountry:'CI'},contactPoint:{'@type':'ContactPoint',telephone:'+2250748733365',contactType:fr?'renseignements':'enquiries',availableLanguage:['French','English']}},
+ {'@type':'WebSite','@id':websiteId,url:`${origin}/`,name:'Octogone',publisher:{'@id':orgId},inLanguage:['fr','en']},
+ {'@type':basePath==='/contact/'?'ContactPage':basePath==='/a-propos/'?'AboutPage':'WebPage','@id':`${canonical}#webpage`,url:canonical,name:pageTitle,description:summary,inLanguage:lang,isPartOf:{'@id':websiteId},about:{'@id':orgId},primaryImageOfPage:{'@type':'ImageObject',url:ogImage},...(crumbs.length>1?{breadcrumb:{'@id':`${canonical}#breadcrumb`}}:{})},
+];
+if(crumbs.length>1)graph.push({'@type':'BreadcrumbList','@id':`${canonical}#breadcrumb`,itemListElement:crumbs.map((c,i)=>({'@type':'ListItem',position:i+1,name:c.name,item:c.item}))});
+if(project)graph.push({'@type':'CreativeWork','@id':`${canonical}#project`,name:project.title,description:tf(project.summary,lang),image:ogImage,url:canonical,inLanguage:lang,isPartOf:{'@id':`${canonical}#webpage`}});
+if(subsidiary)graph.push({'@type':'Service',name:tf(subsidiary.sector,lang),description:tf(subsidiary.tagline,lang),provider:{'@id':orgId},url:canonical});
+const structuredData=JSON.stringify({'@context':'https://schema.org','@graph':graph}).replace(/</g,'\\u003c');
 ---
-
-<title>{title}</title>
-<meta name="description" content={description} />
-<link rel="canonical" href={canonical} />
-
-<link rel="alternate" hreflang="fr" href={frHref} />
-<link rel="alternate" hreflang="en" href={enHref} />
-<link rel="alternate" hreflang="x-default" href={frHref} />
-
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Octogone" />
-<meta property="og:locale" content={lang === 'fr' ? 'fr_CI' : 'en_US'} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:url" content={canonical} />
-<meta property="og:image" content={ogImage} />
-
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={ogImage} />
+<title>{pageTitle}</title>
+<meta name="description" content={summary} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+{!noindex && <><link rel="canonical" href={canonical} /><link rel="alternate" hreflang="fr" href={frHref} /><link rel="alternate" hreflang="en" href={enHref} /><link rel="alternate" hreflang="x-default" href={frHref} /><script type="application/ld+json" set:html={structuredData} /></>}
+<meta property="og:type" content="website" /><meta property="og:site_name" content="Octogone" />
+<meta property="og:locale" content={fr?'fr_CI':'en_US'} /><meta property="og:locale:alternate" content={fr?'en_US':'fr_CI'} />
+<meta property="og:title" content={pageTitle} /><meta property="og:description" content={summary} /><meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} /><meta property="og:image:alt" content={project?.title ?? subsidiary?.name ?? 'Octogone, huit expertises à Abidjan'} />
+{!project && !subsidiary && <><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/></>}
+<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={pageTitle} /><meta name="twitter:description" content={summary} /><meta name="twitter:image" content={ogImage} /><meta name="twitter:image:alt" content={project?.title ?? subsidiary?.name ?? 'Octogone'} />

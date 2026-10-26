@@ -56,6 +56,7 @@ const hostname = (u?: string) => {
         </a>
       </Reveal>
 
+      {p.status === 'draft' && <p class="chip chip-amber mb-5">{lang === 'fr' ? 'Exemple illustratif, projet à valider' : 'Illustrative example, project pending validation'}</p>}
       <div class="flex flex-wrap items-center gap-3">
         <span class="chip">{tf(p.category, lang)}</span>
         {p.year && <span class="chip">{t('label.year')} {p.year}</span>}
@@ -114,6 +115,7 @@ const hostname = (u?: string) => {
     </div>
   </section>
 
+  {p.mobileImage && <section class="project-mobile-gallery"><div class="container-page"><span class="eyebrow">{lang === 'fr' ? 'UNE EXPÉRIENCE MULTIPLATEFORME' : 'A CROSS-PLATFORM EXPERIENCE'}</span><div class="detail-devices"><div class="detail-desktop"><img src={asset(p.image)} alt={p.title} width="1500" height="950" loading="lazy" /></div><div class="detail-phone"><img src={asset(p.mobileImage)} alt={`${p.title} mobile`} width="650" height="1250" loading="lazy" /></div></div></div></section>}
   <!-- Body -->
   <section class="section bg-white">
     <div class="container-page grid gap-14 lg:grid-cols-[1.4fr_0.6fr]">

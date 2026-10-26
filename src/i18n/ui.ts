@@ -44,7 +44,7 @@ export const ui = {
     'hero.title.a': 'Un groupe,',
     'hero.title.b': 'huit expertises',
     'hero.subtitle':
-      'Octogone est une holding ivoirienne qui conçoit, construit et opère des solutions à fort impact — de la technologie aux infrastructures, de la finance à la formation.',
+      'Octogone est une holding ivoirienne qui conçoit, construit et opère des solutions à fort impact, de la technologie aux infrastructures, de la finance à la formation.',
     'hero.scroll': 'Défiler',
 
     'home.sectors.title': 'Huit filiales, une exigence commune',
@@ -75,7 +75,7 @@ export const ui = {
     'contact.form.company': 'Organisation',
     'contact.form.subject': 'Filiale / sujet',
     'contact.form.message': 'Votre message',
-    'contact.form.success': 'Message envoyé. Merci — nous revenons vers vous très vite.',
+    'contact.form.success': 'Message envoyé. Merci, nous revenons vers vous très vite.',
     'contact.form.error':
       'L’envoi a échoué. Écrivez-nous directement à octogone.techs@gmail.com.',
     'contact.form.fallback': 'ou écrivez-nous à',
@@ -85,23 +85,23 @@ export const ui = {
     '404.body': 'La page que vous cherchez a été déplacée ou n’existe pas.',
     '404.cta': 'Revenir à l’accueil',
 
-    'footer.tagline': 'Holding multisectorielle — Abidjan, Côte d’Ivoire.',
+    'footer.tagline': 'Holding multisectorielle, Abidjan, Côte d’Ivoire.',
     'footer.rights': 'Tous droits réservés.',
     'footer.nav': 'Navigation',
     'footer.legal': 'Mentions légales',
     'footer.madeIn': 'Conçu à Abidjan',
 
-    'meta.home.title': 'Octogone — Holding multisectorielle',
+    'meta.home.title': 'Octogone | Groupe multisectoriel à Abidjan',
     'meta.home.desc':
       'Octogone est une holding ivoirienne active dans huit domaines : technologie, BTP, logistique, finance, agro-alimentaire, transport, formation et sécurité.',
-    'meta.about.title': 'À propos — Octogone',
+    'meta.about.title': 'À propos, Octogone',
     'meta.about.desc':
       'Mission, vision et valeurs du groupe Octogone, holding multisectorielle basée à Abidjan.',
-    'meta.contact.title': 'Contact — Octogone',
+    'meta.contact.title': 'Contact et rendez-vous | Octogone Abidjan',
     'meta.contact.desc':
       'Contactez le groupe Octogone et ses filiales pour vos projets en Côte d’Ivoire et en Afrique de l’Ouest.',
-    'meta.subsidiaries.title': 'Filiales — Octogone',
-    'meta.projects.title': 'Réalisations — Octogone',
+    'meta.subsidiaries.title': 'Filiales, Octogone',
+    'meta.projects.title': 'Réalisations, Octogone',
   },
   en: {
     'nav.home': 'Home',
@@ -143,7 +143,7 @@ export const ui = {
     'hero.title.a': 'One group,',
     'hero.title.b': 'eight expertises',
     'hero.subtitle':
-      'Octogone is an Ivorian holding that designs, builds and operates high-impact solutions — from technology to infrastructure, from finance to training.',
+      'Octogone is an Ivorian holding that designs, builds and operates high-impact solutions, from technology to infrastructure, from finance to training.',
     'hero.scroll': 'Scroll',
 
     'home.sectors.title': 'Eight subsidiaries, one standard',
@@ -174,7 +174,7 @@ export const ui = {
     'contact.form.company': 'Organisation',
     'contact.form.subject': 'Subsidiary / topic',
     'contact.form.message': 'Your message',
-    'contact.form.success': 'Message sent. Thank you — we’ll be in touch shortly.',
+    'contact.form.success': 'Message sent. Thank you, we’ll be in touch shortly.',
     'contact.form.error':
       'Sending failed. Please email us directly at octogone.techs@gmail.com.',
     'contact.form.fallback': 'or email us at',
@@ -184,23 +184,23 @@ export const ui = {
     '404.body': 'The page you are looking for has moved or no longer exists.',
     '404.cta': 'Back to home',
 
-    'footer.tagline': 'Multi-sector holding — Abidjan, Côte d’Ivoire.',
+    'footer.tagline': 'Multi-sector holding, Abidjan, Côte d’Ivoire.',
     'footer.rights': 'All rights reserved.',
     'footer.nav': 'Navigation',
     'footer.legal': 'Legal notice',
     'footer.madeIn': 'Built in Abidjan',
 
-    'meta.home.title': 'Octogone — Multi-sector holding',
+    'meta.home.title': 'Octogone | Multisector group in Abidjan',
     'meta.home.desc':
       'Octogone is an Ivorian holding active in eight fields: technology, construction, logistics, finance, agri-food, transport, training and security.',
-    'meta.about.title': 'About — Octogone',
+    'meta.about.title': 'About, Octogone',
     'meta.about.desc':
       'Mission, vision and values of the Octogone group, a multi-sector holding based in Abidjan.',
-    'meta.contact.title': 'Contact — Octogone',
+    'meta.contact.title': 'Contact and appointments | Octogone Abidjan',
     'meta.contact.desc':
       'Get in touch with the Octogone group and its subsidiaries for your projects in West Africa.',
-    'meta.subsidiaries.title': 'Subsidiaries — Octogone',
-    'meta.projects.title': 'Work — Octogone',
+    'meta.subsidiaries.title': 'Subsidiaries, Octogone',
+    'meta.projects.title': 'Work, Octogone',
   },
 } as const;
 

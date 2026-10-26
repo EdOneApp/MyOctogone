@@ -1,75 +1,12 @@
 ---
-import { useTranslations } from '../../i18n/utils';
+import { asset, localizePath } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
-import Reveal from '../../components/Reveal.astro';
-
-interface Props {
-  lang: Lang;
-}
+interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const t = useTranslations(lang);
-
-const steps = [
-  {
-    fr: { title: 'Cadrage', body: 'Ateliers avec vos équipes, objectifs mesurables, contraintes réglementaires et techniques identifiées.' },
-    en: { title: 'Framing', body: 'Workshops with your teams, measurable goals, regulatory and technical constraints identified.' },
-  },
-  {
-    fr: { title: 'Conception', body: 'Architecture, maquettes, plan de charge et jalons. Vous validez avant que le premier euro ne soit engagé.' },
-    en: { title: 'Design', body: 'Architecture, mockups, workload plan and milestones. You sign off before the first euro is committed.' },
-  },
-  {
-    fr: { title: 'Réalisation', body: 'Itérations courtes, revues régulières, tests automatisés. Un point d’avancement transparent chaque semaine.' },
-    en: { title: 'Build', body: 'Short iterations, regular reviews, automated tests. A transparent progress checkpoint every week.' },
-  },
-  {
-    fr: { title: 'Mise en production', body: 'Déploiement maîtrisé, formation des utilisateurs, reprise des données et bascule sans interruption.' },
-    en: { title: 'Go-live', body: 'Controlled deployment, user training, data migration and switchover with no interruption.' },
-  },
-  {
-    fr: { title: 'Exploitation', body: 'Supervision, support et évolutions. Nous restons responsables de ce que nous livrons.' },
-    en: { title: 'Operations', body: 'Monitoring, support and evolutions. We stay accountable for what we deliver.' },
-  },
-];
+const fr = lang === 'fr';
+const steps = fr ? [['Comprendre','Votre contexte, vos objectifs, les réalités de votre métier. Tout commence par l’écoute.'],['Construire','Les bonnes expertises autour de la table, une feuille de route claire et des échanges réguliers.'],['Accompagner','Du premier échange à la mise en œuvre, une équipe impliquée à chaque étape.']] : [['Understand','Your context, your objectives and the realities of your industry. Everything starts with listening.'],['Build','The right expertise around the table, a clear roadmap and regular conversations.'],['Support','From the first conversation to implementation, a committed team at every step.']];
 ---
-
-<section class="section bg-[var(--color-cream)]">
-  <div class="container-page">
-    <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
-      <div class="lg:sticky lg:top-28 lg:self-start">
-        <Reveal>
-          <span class="eyebrow">{t('label.approach')}</span>
-          <h2 class="mt-5 font-display text-[clamp(1.9rem,4vw,2.9rem)] font-bold text-[var(--color-ink)]">
-            {lang === 'fr' ? 'Du premier atelier à l’exploitation' : 'From the first workshop to operations'}
-          </h2>
-          <p class="mt-5 max-w-md text-[var(--color-body)]">{t('home.approach.subtitle')}</p>
-        </Reveal>
-      </div>
-
-      <Reveal stagger class="relative">
-        <div
-          class="absolute left-[19px] bottom-4 top-4 w-px bg-[var(--color-line)]"
-          aria-hidden="true"
-        >
-        </div>
-        <ol class="space-y-7">
-          {
-            steps.map((s, i) => (
-              <li class="relative pl-14">
-                <span
-                  class="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-xl border border-[var(--color-line)] bg-white font-display text-sm font-semibold text-[var(--color-navy)]"
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <h3 class="font-display text-lg font-semibold text-[var(--color-ink)]">
-                  {s[lang].title}
-                </h3>
-                <p class="mt-1.5 text-sm leading-relaxed text-[var(--color-body)]">{s[lang].body}</p>
-              </li>
-            ))
-          }
-        </ol>
-      </Reveal>
-    </div>
-  </div>
+<section class="approach-section">
+ <div class="approach-image"><img src={asset('images/collaboration.jpg')} alt={fr ? 'Échange autour d’un projet, photographie d’illustration' : 'Project discussion, illustrative photograph'} loading="lazy" width="1400" height="1000" /><span>{fr ? 'LE COLLECTIF FAIT LA DIFFÉRENCE.' : 'TOGETHER MAKES THE DIFFERENCE.'}</span></div>
+ <div class="approach-content"><div class="reveal"><span class="eyebrow">{fr ? '04 / NOTRE APPROCHE' : '04 / OUR APPROACH'}</span><h2>{fr ? 'À vos côtés.' : 'By your side.'}<br /><em>{fr ? 'À chaque étape.' : 'At every step.'}</em></h2></div><div>{steps.map(([title,body],i) => <details class="approach-step" open={i === 0}><summary><span>0{i+1}</span><h3>{title}</h3><b aria-hidden="true">+</b></summary><p>{body}</p></details>)}</div><a class="text-link" href={localizePath('/contact',lang)}>{fr ? 'Parlons de votre projet' : 'Let’s discuss your project'} <span>↗</span></a></div>
 </section>

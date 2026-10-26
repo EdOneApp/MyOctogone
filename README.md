@@ -1,15 +1,15 @@
 # MyOctogone
 
-Site vitrine corporate du groupe **Octogone** — holding multisectorielle (Abidjan, Côte d'Ivoire)
+Site vitrine corporate du groupe **Octogone** , holding multisectorielle (Abidjan, Côte d'Ivoire)
 active dans huit domaines : Technologie, BTP, Global Logistique, Finance, Agro-alimentaire,
 Transport, Formation et Sécurité.
 
 ## Stack
 
-- **[Astro 5](https://astro.build)** — sortie 100 % statique
+- **[Astro 5](https://astro.build)** , sortie 100 % statique
 - **React (îlots)** + **[Motion](https://motion.dev)** (Framer Motion) pour les animations
 - **Tailwind CSS v4** (`@tailwindcss/vite`)
-- **i18n** natif Astro — français (`/`) et anglais (`/en/`)
+- **i18n** natif Astro , français (`/`) et anglais (`/en/`)
 - Déploiement **GitHub Pages** via GitHub Actions (`withastro/action`)
 
 ## Développement
@@ -35,16 +35,13 @@ Le contenu vit dans `src/data/` :
 
 Les chaînes d'interface sont dans `src/i18n/ui.ts`.
 
-## Formulaire de contact
+## Contact et rendez-vous
 
-Le site étant statique, le formulaire poste vers un service tiers. Renseigner l'endpoint dans
-un fichier `.env` (voir `.env.example`) :
+Le bouton du formulaire ouvre WhatsApp vers **+225 07 48 73 33 65**, avec le nom, l’e-mail, l’organisation facultative, le sujet et le message préremplis. Le visiteur confirme l’envoi dans WhatsApp. Aucun envoi Formspree n’est effectué ; l’ancienne variable `PUBLIC_CONTACT_ENDPOINT` n’est plus utilisée. Si le navigateur bloque l’ouverture d’un onglet, un lien permet d’ouvrir le message préparé.
 
-```
-PUBLIC_CONTACT_ENDPOINT=https://formspree.io/f/xxxxxxx
-```
-
-Sans endpoint, le formulaire bascule sur un lien `mailto:contact@myoctogone.com`.
+Le calendrier Cal.com utilise le même rendez-vous de 30 minutes que le portfolio :
+`jean-marie-daniel-vianney-guedegbe-qfjxgu/30min`.
+Il est intégré dans `src/components/AppointmentCalendar.astro`, avec un lien direct de secours et une présentation bilingue. Les disponibilités et confirmations sont gérées par Cal.com. La politique de confidentialité décrit les deux services.
 
 ## Déploiement
 
@@ -57,3 +54,7 @@ Prérequis côté GitHub / DNS :
    - 4 enregistrements `A` vers `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
    - `CNAME` `www` → `edoneapp.github.io`
 3. Le fichier `public/CNAME` (déjà présent) fixe le domaine personnalisé.
+
+## Référencement
+
+Robots : `/robots.txt`. Plan du site : `/sitemap-index.xml` et `/sitemap.xml`. Les 60 URL indexables sont générées avec leurs versions françaises et anglaises. Données structurées, métadonnées sociales et URLs canoniques sont définies dans `src/components/SEO.astro`. Voir `docs/seo.md` pour les contrôles après publication.

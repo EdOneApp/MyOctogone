@@ -33,8 +33,8 @@ export function tf(value: Localized | string, lang: Lang): string {
 export function localizePath(path: string, lang: Lang): string {
   const clean = '/' + path.replace(/^\/+/, '').replace(/\/+$/, '');
   const normalized = clean === '/' ? '' : clean;
-  if (lang === defaultLang) return normalized || '/';
-  return `/en${normalized}` || '/en';
+  if (lang === defaultLang) return normalized ? `${normalized}/` : '/';
+  return `/en${normalized}/`;
 }
 
 /** Strip the language prefix from a pathname, returning the canonical FR path. */

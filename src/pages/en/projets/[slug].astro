@@ -15,10 +15,10 @@ export const getStaticPaths = (() => {
 const { project } = Astro.props;
 const lang = 'en' as const;
 
-const title = `${project.title} — ${tf(project.category, lang)} | Octogone`;
+const title = `${project.title}, ${tf(project.category, lang)} | Octogone`;
 const description = tf(project.summary, lang);
 ---
 
-<BaseLayout title={title} description={description} image={project.image}>
+<BaseLayout title={title} description={description} image={project.image} noindex={project.status !== 'verified'}>
   <ProjectContent project={project} lang={lang} />
 </BaseLayout>

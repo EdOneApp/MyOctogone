@@ -1,20 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { useTranslations, localizePath } from '../i18n/utils';
-
-const lang = 'fr' as const;
-const t = useTranslations(lang);
+import ErrorContent from '../sections/ErrorContent.astro';
 ---
-
-<BaseLayout title={`${t('404.title')} — Octogone`} description={t('404.body')}>
-  <section class="relative flex min-h-[80vh] items-center overflow-hidden bg-[var(--color-cream)]">
-    <div class="dot-grid absolute inset-0 opacity-60"></div>
-    <div class="blob left-1/2 top-1/2 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2" style="background: rgba(245,166,35,0.2)"></div>
-    <div class="container-page relative text-center">
-      <p class="font-display text-[clamp(4rem,18vw,11rem)] font-bold leading-none text-[var(--color-navy)]">404</p>
-      <h1 class="mt-4 font-display text-2xl font-bold text-[var(--color-ink)]">{t('404.title')}</h1>
-      <p class="mx-auto mt-3 max-w-md text-[var(--color-body)]">{t('404.body')}</p>
-      <a href={localizePath('/', lang)} class="btn btn-primary mt-8">{t('404.cta')}</a>
-    </div>
-  </section>
-</BaseLayout>
+<BaseLayout title="404, Octogone" description="Page introuvable. Retrouvez les métiers et projets Octogone." noindex><ErrorContent code="404" lang="fr" /></BaseLayout>

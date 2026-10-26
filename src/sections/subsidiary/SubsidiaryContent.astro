@@ -64,6 +64,7 @@ const idx = subsidiaries.findIndex((x) => x.slug === s.slug);
       </div>
     </div>
 
+    <img class="subsidiary-photo" src={asset(s.slug === 'logistique' || s.slug === 'transport' ? 'images/logistics.jpg' : s.slug === 'btp' ? 'images/building.jpg' : 'images/collaboration.jpg')} alt={lang === 'fr' ? 'Photographie d’illustration du secteur' : 'Illustrative sector photograph'} width="1400" height="800" />
     <Reveal delay={0.18} class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
         s.figures.map((f) => (

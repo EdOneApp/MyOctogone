@@ -1,36 +1,13 @@
 ---
-import { tf } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
-import { groupStats } from '../../data/stats';
-import Counter from '../../components/react/Counter.tsx';
-import Reveal from '../../components/Reveal.astro';
-
-interface Props {
-  lang: Lang;
-}
+interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const locale = lang === 'fr' ? 'fr-FR' : 'en-US';
+const fr = lang === 'fr';
 ---
-
-<section class="border-y border-[var(--color-line-cool)] bg-white">
-  <div class="container-page grid grid-cols-2 divide-x divide-y divide-[var(--color-line-cool)] sm:divide-y-0 lg:grid-cols-4">
-    {
-      groupStats.map((s, i) => (
-        <Reveal delay={i * 0.08} class="p-8 text-center sm:p-10">
-          <div class="font-display text-[clamp(2.2rem,5vw,3.2rem)] font-bold text-[var(--color-navy)]">
-            <Counter
-              client:visible
-              value={s.value}
-              prefix={s.prefix}
-              suffix={s.suffix}
-              locale={locale}
-            />
-          </div>
-          <div class="mt-2 text-xs uppercase tracking-[0.16em] text-[var(--color-muted)]">
-            {tf(s.label, lang)}
-          </div>
-        </Reveal>
-      ))
-    }
-  </div>
+<section id="groupe" class="group-intro section">
+ <div class="container-page intro-grid">
+  <div class="reveal"><span class="eyebrow">{fr ? '01 / LE GROUPE' : '01 / THE GROUP'}</span><p class="intro-location">Abidjan, Côte d’Ivoire<br /><span>{fr ? 'Un ancrage local. Une vision ouverte.' : 'Local roots. An open outlook.'}</span></p></div>
+  <div class="reveal"><h2>{fr ? 'La force du collectif.' : 'The strength of a collective.'}<br /><span>{fr ? 'L’exigence du terrain.' : 'The rigour of the field.'}</span></h2><p class="intro-copy">{fr ? 'Octogone réunit huit métiers complémentaires autour d’une conviction : les bonnes idées prennent de la valeur lorsqu’elles deviennent des solutions concrètes. Technologie, infrastructures, services : nos expertises se rencontrent pour accompagner vos projets.' : 'Octogone brings eight complementary sectors together around a conviction: good ideas gain value when they become practical solutions. Technology, infrastructure and services: our expertise comes together to support your projects.'}</p><a class="text-link" href={lang === 'fr' ? '/a-propos/' : '/en/a-propos/'}>{fr ? 'Rencontrer Octogone' : 'Meet Octogone'} <span>↗</span></a></div>
+ </div>
+ <div class="container-page intro-numbers"><div><strong>08</strong><span>{fr ? 'métiers complémentaires' : 'complementary sectors'}</span></div><div><strong>01</strong><span>{fr ? 'vision commune' : 'shared vision'}</span></div><p>{fr ? 'La Boîte à Génies.' : 'The home of ingenuity.'}<br /><span>{fr ? 'Penser ensemble. Agir concrètement.' : 'Think together. Make it happen.'}</span></p></div>
 </section>

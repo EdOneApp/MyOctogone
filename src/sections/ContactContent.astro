@@ -1,10 +1,11 @@
 ---
-import { useTranslations, tf } from '../i18n/utils';
+import { useTranslations, tf, asset, localizePath } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 import { subsidiaries } from '../data/subsidiaries';
 import { ui } from '../i18n/ui';
 import Reveal from '../components/Reveal.astro';
 import ContactForm from '../components/react/ContactForm.tsx';
+import AppointmentCalendar from '../components/AppointmentCalendar.astro';
 
 interface Props {
   lang: Lang;
@@ -12,8 +13,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const endpoint =
-  import.meta.env.PUBLIC_CONTACT_ENDPOINT || 'https://formspree.io/f/xppzwgez';
 const email = 'octogone.techs@gmail.com';
 
 const labels = {
@@ -22,10 +21,6 @@ const labels = {
   company: ui[lang]['contact.form.company'],
   subject: ui[lang]['contact.form.subject'],
   message: ui[lang]['contact.form.message'],
-  send: ui[lang]['cta.send'],
-  sending: ui[lang]['cta.sending'],
-  success: ui[lang]['contact.form.success'],
-  error: ui[lang]['contact.form.error'],
   fallback: ui[lang]['contact.form.fallback'],
 };
 
@@ -48,9 +43,10 @@ const subjects = [
         {t('contact.title')}
       </h1>
       <Reveal delay={0.1}>
-        <p class="mt-6 max-w-md text-lg leading-relaxed text-[var(--color-body)]">{t('contact.subtitle')}</p>
+        <p class="mt-6 max-w-md text-lg leading-relaxed text-[var(--color-body)]">{lang === 'fr' ? 'Décrivez votre besoin sur WhatsApp ou choisissez un créneau pour en discuter avec Daniel Guedegbe.' : 'Share your needs on WhatsApp or choose a time to discuss them with Daniel Guedegbe.'}</p>
       </Reveal>
 
+      <a href="#rendez-vous" class="text-link mt-5">{lang === 'fr' ? 'Réserver un rendez-vous de 30 min' : 'Book a 30-minute appointment'} <span>↗</span></a>
       <Reveal delay={0.18} class="mt-10 space-y-6">
         <div>
           <h2 class="font-display text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
@@ -67,16 +63,21 @@ const subjects = [
           <p class="mt-2 text-sm text-[var(--color-body)]">Côte d’Ivoire 🇨🇮</p>
         </div>
       </Reveal>
+      <img class="contact-visual" src={asset('images/architecture.jpg')} alt={lang === 'fr' ? 'Espace de travail, photographie d’illustration' : 'Workspace, illustrative photograph'} width="900" height="600" />
     </div>
 
     <Reveal delay={0.1}>
       <ContactForm
         client:load
-        endpoint={endpoint}
+        lang={lang}
         email={email}
         labels={labels}
         subjects={subjects}
+        privacyHref={localizePath('/confidentialite',lang)}
+        privacyLabel={lang === 'fr' ? 'Utilisation de vos données : politique de confidentialité' : 'How your data is used: privacy policy'}
       />
     </Reveal>
   </div>
 </section>
+
+<AppointmentCalendar lang={lang} />

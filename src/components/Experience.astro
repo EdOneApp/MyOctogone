@@ -1,0 +1,39 @@
+<div class="cursor-aura" aria-hidden="true"></div>
+<button class="motion-toggle" type="button" aria-pressed="false"><span aria-hidden="true">◉</span><span data-motion-label>Animations</span></button>
+<script>
+const setupExperience = () => {
+ const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+ const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+ const controller = new AbortController();
+ const {signal} = controller;
+ let paused = sessionStorage.getItem('octogone-motion') === 'paused';
+ const toggle = document.querySelector<HTMLButtonElement>('.motion-toggle');
+ const fr = document.documentElement.lang === 'fr';
+ const update = () => {document.documentElement.classList.toggle('motion-paused',paused);toggle?.setAttribute('aria-pressed',String(paused));const label=toggle?.querySelector('[data-motion-label]');if(label)label.textContent=paused?(fr?'Reprendre les animations':'Resume animations'):(fr?'Pause animations':'Pause animations');};
+ update();
+ toggle?.addEventListener('click',()=>{paused=!paused;sessionStorage.setItem('octogone-motion',paused?'paused':'active');update();},{signal});
+ const stage = document.querySelector<HTMLElement>('.hero-stage');
+ const aura = document.querySelector<HTMLElement>('.cursor-aura');
+ let frame=0, x=0,y=0;
+ document.addEventListener('pointermove',(event)=>{
+  if(!fine.matches||reduce.matches||paused)return;
+  x=event.clientX;y=event.clientY;
+  if(frame)return;
+  frame=requestAnimationFrame(()=>{frame=0;aura?.style.setProperty('--cursor-x',`${x}px`);aura?.style.setProperty('--cursor-y',`${y}px`);});
+ },{passive:true,signal});
+ stage?.addEventListener('pointermove',(event)=>{
+  if(!fine.matches||reduce.matches||paused)return;
+  const box=stage.getBoundingClientRect();const dx=(event.clientX-box.left)/box.width-.5;const dy=(event.clientY-box.top)/box.height-.5;
+  stage.querySelectorAll<HTMLElement>('[data-depth]').forEach(el=>{const depth=Number(el.dataset.depth);el.style.setProperty('--drift-x',`${dx*24*depth}px`);el.style.setProperty('--drift-y',`${dy*20*depth}px`);});
+ },{passive:true,signal});
+ stage?.addEventListener('pointerleave',()=>{stage.querySelectorAll<HTMLElement>('[data-depth]').forEach(el=>{el.style.setProperty('--drift-x','0px');el.style.setProperty('--drift-y','0px');});},{signal});
+ document.querySelectorAll<HTMLElement>('.portfolio-card,.sector-panel').forEach(card=>{
+  card.addEventListener('pointermove',event=>{if(!fine.matches||reduce.matches||paused)return;const b=card.getBoundingClientRect();const dx=(event.clientX-b.left)/b.width;const dy=(event.clientY-b.top)/b.height;card.style.setProperty('--light-x',`${dx*100}%`);card.style.setProperty('--light-y',`${dy*100}%`);card.style.setProperty('--tilt-x',`${(dy-.5)*-5}deg`);card.style.setProperty('--tilt-y',`${(dx-.5)*5}deg`);},{passive:true,signal});
+  card.addEventListener('pointerleave',()=>{card.style.setProperty('--tilt-x','0deg');card.style.setProperty('--tilt-y','0deg');},{signal});
+ });
+ const filters=document.querySelectorAll<HTMLButtonElement>('[data-project-filter]');const cards=document.querySelectorAll<HTMLElement>('[data-project-category]');
+ filters.forEach(button=>button.addEventListener('click',()=>{const selected=button.dataset.projectFilter;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let count=0;cards.forEach(card=>{const show=selected==='all'||card.dataset.projectCategory===selected;card.hidden=!show;if(show){count++;card.classList.add('is-visible');}});const counter=document.querySelector('[data-project-count]');if(counter)counter.textContent=String(count);const empty=document.querySelector<HTMLElement>('.project-empty');if(empty)empty.hidden=count>0;},{signal}));
+ document.addEventListener('astro:before-swap',()=>{controller.abort();cancelAnimationFrame(frame);},{once:true});
+};
+document.addEventListener('astro:page-load',setupExperience);
+</script>

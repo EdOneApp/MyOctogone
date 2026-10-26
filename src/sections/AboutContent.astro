@@ -39,8 +39,8 @@ const values = [
 const awards = [
   {
     img: 'assets/moov-stratup-challenge-2025-first-price.jpeg',
-    fr: '1er Prix — Moov Africa CI StartUp Challenge 2025 (Edone)',
-    en: '1st Prize — Moov Africa CI StartUp Challenge 2025 (Edone)',
+    fr: '1er Prix, Moov Africa CI StartUp Challenge 2025 (Edone)',
+    en: '1st Prize, Moov Africa CI StartUp Challenge 2025 (Edone)',
   },
   {
     img: 'assets/moov-startupchallenge-2025-first-pirce-new.jpeg',
@@ -49,8 +49,8 @@ const awards = [
   },
   {
     img: 'assets/proj_trace-agri-chain.jpg',
-    fr: 'Finaliste — MASS / ICESCO 2025 (TraceAgriChain)',
-    en: 'Finalist — MASS / ICESCO 2025 (TraceAgriChain)',
+    fr: 'Finaliste, MASS / ICESCO 2025 (TraceAgriChain)',
+    en: 'Finalist, MASS / ICESCO 2025 (TraceAgriChain)',
   },
 ];
 ---
@@ -68,6 +68,7 @@ const awards = [
     <Reveal delay={0.1}>
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-body)]">{t('about.intro')}</p>
     </Reveal>
+    <img class="interior-visual" src={asset('images/collaboration.jpg')} alt={lang === 'fr' ? 'Collaboration en entreprise, photographie d’illustration' : 'Business collaboration, illustrative photograph'} width="1400" height="800" />
   </div>
 </section>
 

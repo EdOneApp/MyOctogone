@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalContent from '../sections/LegalContent.astro';
+import { legalPages } from '../data/legal';
+const page = legalPages['confidentialite']['fr'];
+---
+<BaseLayout title={`${page.title}, Octogone`} description={page.intro}><LegalContent slug="confidentialite" lang="fr" /></BaseLayout>

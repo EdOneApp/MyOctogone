@@ -1,0 +1,33 @@
+---
+import type { Lang } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+const calLink = 'jean-marie-daniel-vianney-guedegbe-qfjxgu/30min';
+---
+<section id="rendez-vous" class="appointment-section section">
+ <div class="container-page"><div class="appointment-heading"><div><span class="eyebrow">{fr ? 'PRENONS LE TEMPS D’EN PARLER' : 'LET’S TAKE TIME TO TALK'}</span><h2>{fr ? 'Un rendez-vous.' : 'One conversation.'}<br /><em>{fr ? 'Des idées qui avancent.' : 'Ideas moving forward.'}</em></h2></div><div class="appointment-host"><span>DG</span><div><b>Daniel Guedegbe</b><p>{fr ? 'Échange de 30 minutes' : '30-minute conversation'}</p></div></div></div>
+ <p class="appointment-intro">{fr ? 'Choisissez un créneau disponible dans le calendrier ci-dessous. Le fuseau horaire et les détails du rendez-vous sont affichés par Cal.com.' : 'Choose an available time below. Cal.com displays the time zone and appointment details.'}</p>
+ <div class="appointment-calendar-shell"><div id="octogone-cal" data-cal-link={calLink} data-cal-locale={lang} class="appointment-calendar"></div><noscript><p>{fr ? 'Ouvrez le calendrier pour consulter les disponibilités et réserver votre rendez-vous.' : 'Open the calendar to view availability and book your appointment.'}</p></noscript></div>
+ <div class="appointment-fallback"><p>{fr ? 'Le calendrier ne s’affiche pas ?' : 'Calendar not displaying?'}</p><a href={`https://cal.com/${calLink}`} target="_blank" rel="noopener noreferrer">{fr ? 'Ouvrir le calendrier sur Cal.com' : 'Open the calendar on Cal.com'} ↗</a></div>
+ <p class="appointment-privacy">{fr ? 'La réservation est gérée par Cal.com. Les informations saisies dans le calendrier lui sont transmises.' : 'Bookings are handled by Cal.com. Information entered in the calendar is shared with this provider.'}</p>
+ </div>
+</section>
+<script is:inline>
+(() => {
+ if (window.__octogoneCalBound) return;
+ window.__octogoneCalBound = true;
+ const setup = () => {
+  const el = document.getElementById('octogone-cal');
+  if (!el || el.dataset.calInitialized) return;
+  el.dataset.calInitialized = 'true';
+  (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];const s=d.createElement('script');s.src=A;s.async=true;d.head.appendChild(s);cal.loaded=true;}if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];if(typeof ns==='string'){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,['initNamespace',ns]);}else p(cal,ar);return;}p(cal,ar);};})(window,'https://app.cal.com/embed/embed.js','init');
+  window.Cal('init','octogone-30min',{origin:'https://cal.com'});
+  const cal = window.Cal.ns['octogone-30min'];
+  cal('inline',{elementOrSelector:'#octogone-cal',calLink:el.dataset.calLink,config:{layout:'month_view',theme:'dark',locale:el.dataset.calLocale}});
+  cal('ui',{theme:'dark',cssVarsPerTheme:{dark:{'cal-brand':'#f4a024'},light:{'cal-brand':'#142344'}},hideEventTypeDetails:false,layout:'month_view'});
+ };
+ document.addEventListener('astro:page-load',setup);
+ if(document.readyState!=='loading')setup();
+})();
+</script>

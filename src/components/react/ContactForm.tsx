@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { buildWhatsAppUrl } from '../../lib/whatsapp';
 
 type Labels = {
   name: string;
@@ -7,52 +7,37 @@ type Labels = {
   company: string;
   subject: string;
   message: string;
-  send: string;
-  sending: string;
-  success: string;
-  error: string;
   fallback: string;
 };
 
 type Props = {
-  endpoint?: string;
+  lang: 'fr' | 'en';
   email: string;
   labels: Labels;
   subjects: string[];
+  privacyHref?: string;
+  privacyLabel?: string;
 };
 
-type State = 'idle' | 'loading' | 'ok' | 'err';
 
-export default function ContactForm({ endpoint, email, labels, subjects }: Props) {
-  const [state, setState] = useState<State>('idle');
+export default function ContactForm({ lang, email, labels, subjects, privacyHref = "/confidentialite", privacyLabel = "Politique de confidentialité" }: Props) {
+  const [preparedUrl, setPreparedUrl] = useState('');
+  const fr = lang === 'fr';
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
+    if (!form.reportValidity()) return;
     const data = new FormData(form);
-
-    if (!endpoint) {
-      const subject = encodeURIComponent(`[Octogone] ${data.get('subject') ?? ''}`);
-      const body = encodeURIComponent(
-        `${data.get('name')} — ${data.get('company')}\n${data.get('email')}\n\n${data.get('message')}`
-      );
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-      return;
-    }
-
-    setState('loading');
-    try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: data,
-      });
-      if (!res.ok) throw new Error(String(res.status));
-      setState('ok');
-      form.reset();
-    } catch {
-      setState('err');
-    }
+    const url = buildWhatsAppUrl({
+      name: String(data.get('name') ?? ''),
+      email: String(data.get('email') ?? ''),
+      company: String(data.get('company') ?? ''),
+      subject: String(data.get('subject') ?? ''),
+      message: String(data.get('message') ?? ''),
+    }, lang);
+    setPreparedUrl(url);
+    window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   const field =
@@ -63,6 +48,7 @@ export default function ContactForm({ endpoint, email, labels, subjects }: Props
       onSubmit={onSubmit}
       className="space-y-4 rounded-[1.25rem] border border-[#e4e8f0] bg-white p-6 shadow-[0_2px_6px_rgba(28,41,81,0.06),0_30px_60px_-24px_rgba(28,41,81,0.2)] sm:p-8"
     >
+      <p className="whatsapp-form-intro">{fr ? 'Votre demande sera préparée dans WhatsApp pour le +225 07 48 73 33 65. Vous pourrez la relire avant de l’envoyer.' : 'Your enquiry will be prepared in WhatsApp for +225 07 48 73 33 65. You can review it before sending.'}</p>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="mb-1.5 block text-xs font-medium text-[#4b5375]">{labels.name}</span>
@@ -99,10 +85,9 @@ export default function ContactForm({ endpoint, email, labels, subjects }: Props
       <div className="flex flex-wrap items-center gap-4 pt-1">
         <button
           type="submit"
-          disabled={state === 'loading'}
           className="btn btn-primary disabled:opacity-60"
         >
-          {state === 'loading' ? labels.sending : labels.send}
+          {fr ? 'Envoyer sur WhatsApp' : 'Send via WhatsApp'}
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -115,28 +100,13 @@ export default function ContactForm({ endpoint, email, labels, subjects }: Props
         </span>
       </div>
 
-      <AnimatePresence>
-        {state === 'ok' && (
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"
-          >
-            {labels.success}
-          </motion.p>
-        )}
-        {state === 'err' && (
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"
-          >
-            {labels.error}
-          </motion.p>
-        )}
-      </AnimatePresence>
+      <p className="contact-privacy"><a href={privacyHref}>{privacyLabel} ↗</a></p>
+
+      {preparedUrl && <p className="whatsapp-form-prepared" role="status">
+        {fr ? 'Votre message est prêt. Finalisez son envoi dans WhatsApp. Si aucun onglet ne s’est ouvert : ' : 'Your message is ready. Complete sending it in WhatsApp. If no tab opened: '}
+        <a href={preparedUrl} target="_blank" rel="noopener noreferrer">{fr ? 'ouvrir WhatsApp' : 'open WhatsApp'} ↗</a>
+      </p>}
+
     </form>
   );
 }

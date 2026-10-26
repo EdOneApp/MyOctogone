@@ -10,15 +10,15 @@ const year = new Date().getFullYear();
 const email = 'octogone.techs@gmail.com';
 ---
 
-<footer class="border-t border-[var(--color-line-cool)] bg-[var(--color-cream)]">
+<footer id="site-footer" class="border-t border-[var(--color-line-cool)] bg-[var(--color-cream)]">
   <div class="container-page grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr] md:py-20">
     <div>
       <img
         src={asset('assets/logo-lockup.png')}
-        alt="Octogone — La Boîte à Génies"
+        alt="Octogone, La Boîte à Génies"
         width="180"
         height="120"
-        class="h-16 w-auto"
+        class="footer-logo"
       />
       <p class="mt-5 max-w-xs text-sm leading-relaxed text-[var(--color-body)]">
         {t('footer.tagline')}
@@ -72,12 +72,25 @@ const email = 'octogone.techs@gmail.com';
     </div>
   </div>
 
+  <div class="container-page footer-signature-wrap">
+    <div class="footer-signature-heading"><span class="eyebrow">{lang === 'fr' ? 'LA BOÎTE À GÉNIES' : 'A HOME FOR INGENUITY'}</span><a href="https://wa.me/2250748733365?text=Bonjour%20Octogone%2C%20je%20souhaite%20discuter%20de%20mon%20projet." target="_blank" rel="noopener noreferrer">{lang === 'fr' ? 'Une idée ? Parlons-en.' : 'An idea? Let’s talk.'} ↗</a></div>
+    <div class="footer-signature" aria-label="Octogone Technologie">
+      <img class="signature-animated" src={asset('images/octogone-signature.gif')} alt="" aria-hidden="true" width="1000" height="170" loading="lazy" />
+      <img class="signature-still" src={asset('images/octogone-signature-static.png')} alt="" aria-hidden="true" width="1000" height="170" loading="lazy" />
+    </div>
+    <div class="footer-sea" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0 40 Q180 0 360 40 T720 40 T1080 40 T1440 40 V80 H0Z"/><path d="M0 48 Q180 80 360 48 T720 48 T1080 48 T1440 48 V80 H0Z"/></svg></div>
+  </div>
   <div class="border-t border-[var(--color-line-cool)]">
     <div
       class="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-[var(--color-muted)] sm:flex-row"
     >
+      <nav class="footer-legal" aria-label={lang === 'fr' ? 'Informations légales' : 'Legal information'}>
+        <a href={localizePath('/mentions-legales',lang)}>{lang === 'fr' ? 'Mentions légales' : 'Legal notice'}</a>
+        <a href={localizePath('/confidentialite',lang)}>{lang === 'fr' ? 'Confidentialité' : 'Privacy'}</a>
+        <a href={localizePath('/cgu',lang)}>{lang === 'fr' ? 'CGU' : 'Terms of use'}</a>
+      </nav>
       <p>© {year} Octogone. {t('footer.rights')}</p>
-      <p>{t('footer.madeIn')} — Abidjan, Côte d’Ivoire 🇨🇮</p>
+      <p>{t('footer.madeIn')}, Abidjan, Côte d’Ivoire 🇨🇮</p>
     </div>
   </div>
 </footer>

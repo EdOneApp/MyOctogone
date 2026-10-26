@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ErrorContent from '../../sections/ErrorContent.astro';
+import { errorPages, type ErrorCode } from '../../data/errors';
+export function getStaticPaths() { return Object.keys(errorPages).filter(code=>code!=='404').map(code=>({params:{code},props:{code}})); }
+interface Props { code: ErrorCode; }
+const {code} = Astro.props;
+const page=errorPages[code];
+---
+<BaseLayout title={`${page[2]}, Octogone`} description={page[3]} noindex><ErrorContent code={code} lang="en" /></BaseLayout>

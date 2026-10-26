@@ -12,7 +12,7 @@ type Props = {
 /**
  * Pure CSS marquee (animation defined in global.css). Rendered on the client
  * only so the duplicated track doesn't bloat the HTML payload, but it needs no
- * JS to run — falls back to a wrapped static row under reduced motion.
+ * JS to run, falls back to a wrapped static row under reduced motion.
  */
 export default function Marquee({ items, duration = 40, base = '' }: Props) {
   const row = (key: string) =>

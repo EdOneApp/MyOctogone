@@ -15,7 +15,7 @@ export const getStaticPaths = (() => {
 const { subsidiary } = Astro.props;
 const lang = 'fr' as const;
 
-const title = `${subsidiary.name} — ${tf(subsidiary.sector, lang)} | Octogone`;
+const title = `${subsidiary.name}, ${tf(subsidiary.sector, lang)} | Octogone`;
 const description = tf(subsidiary.tagline, lang);
 ---
 

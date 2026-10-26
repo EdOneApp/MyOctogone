@@ -5,15 +5,19 @@ import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Experience from '../components/Experience.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import OceanLoader from '../components/OceanLoader.astro';
 import ScrollProgress from '../components/react/ScrollProgress.tsx';
 
 interface Props {
   title: string;
   description: string;
   image?: string;
+  noindex?: boolean;
 }
 
-const { title, description, image } = Astro.props;
+const { title, description, image, noindex = false } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
@@ -26,21 +30,31 @@ const t = useTranslations(lang);
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <SEO title={title} description={description} lang={lang} image={image} />
+    <SEO title={title} description={description} lang={lang} image={image} noindex={noindex} />
     <ClientRouter />
     <script is:inline>
       document.documentElement.classList.remove('no-js');
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        let motionPaused = false;
+        try { motionPaused = sessionStorage.getItem('octogone-motion') === 'paused'; } catch {}
+        if (!motionPaused) {
+          document.documentElement.classList.add('ocean-loading');
+          setTimeout(() => document.documentElement.classList.remove('ocean-loading'), 1800);
+        }
+      }
     </script>
   </head>
   <body>
+    <OceanLoader />
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-[var(--color-amber)] focus:px-4 focus:py-2 focus:font-display focus:text-sm focus:font-semibold focus:text-[var(--color-navy)]"
@@ -57,6 +71,8 @@ const t = useTranslations(lang);
     </main>
 
     <Footer />
+    <Experience />
+    <WhatsAppButton />
 
     <script is:inline>
       (() => {

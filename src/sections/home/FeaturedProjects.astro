@@ -1,51 +1,21 @@
 ---
-import { useTranslations, localizePath, tf, asset } from '../../i18n/utils';
-import type { Lang } from '../../i18n/ui';
 import { featuredProjects } from '../../data/projects';
-import CardGrid, { type CardItem } from '../../components/react/CardGrid.tsx';
-import Reveal from '../../components/Reveal.astro';
-
-interface Props {
-  lang: Lang;
-}
+import { asset, tf, localizePath } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const t = useTranslations(lang);
-
-const items: CardItem[] = featuredProjects().map((p, i) => ({
-  index: String(i + 1).padStart(2, '0'),
-  title: p.title,
-  subtitle: tf(p.category, lang),
-  description: tf(p.summary, lang),
-  href: localizePath(`/projets/${p.slug}`, lang),
-  image: asset(p.image),
-  tags: p.stack,
-  badge: p.award ? tf(p.award, lang) : undefined,
-  cta: t('cta.viewProject'),
-}));
+const fr = lang === 'fr';
+const projects = featuredProjects();
+const group = (slug: string) => ['spaghetti-dabidjan','sportif-africa','bantoo'].includes(slug) ? 'commerce' : ['voltara','ivolt','allocar'].includes(slug) ? 'mobility' : ['xofa','momofund','wave-business-api-sdk','fne-ivoire'].includes(slug) ? 'finance' : ['pandatree','traceagrichain'].includes(slug) ? 'data' : 'platform';
+const filters = fr ? [['all','Tous les projets'],['platform','Plateformes'],['commerce','Commerce & services'],['mobility','Mobilité'],['finance','Finance'],['data','Données & territoire']] : [['all','All projects'],['platform','Platforms'],['commerce','Commerce & services'],['mobility','Mobility'],['finance','Finance'],['data','Data & territory']];
 ---
-
-<section id="realisations" class="section scroll-mt-24 bg-white">
-  <div class="container-page">
-    <div class="flex flex-wrap items-end justify-between gap-6">
-      <div class="max-w-2xl">
-        <Reveal>
-          <span class="eyebrow">{t('label.projects')}</span>
-          <h2 class="mt-5 font-display text-[clamp(1.9rem,4vw,2.9rem)] font-bold text-[var(--color-ink)]">
-            {t('home.featured.title')}
-          </h2>
-          <p class="mt-5 text-[var(--color-body)]">{t('home.featured.subtitle')}</p>
-        </Reveal>
-      </div>
-      <a href={localizePath('/filiales/technologies', lang)} class="link-arrow">
-        {t('cta.allProjects')}
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </a>
-    </div>
-
-    <div class="mt-14">
-      <CardGrid client:visible items={items} columns="sm:grid-cols-2 lg:grid-cols-3" />
-    </div>
-  </div>
+<section id="realisations" class="section work-section portfolio-section">
+ <div class="container-page">
+  <div class="section-heading reveal"><div><span class="eyebrow">{fr ? '03 / DU CONCRET, PAS DES PROMESSES' : '03 / REAL PROJECTS, REAL IMPACT'}</span><h2>{fr ? 'Pensés ici.' : 'Conceived here.'}<br /><em>{fr ? 'Utilisés au quotidien.' : 'Used every day.'}</em></h2></div><p>{fr ? 'Des applications, des plateformes, des solutions de terrain. Explorez les projets et leurs interfaces.' : 'Applications, platforms and practical solutions. Explore our projects and their interfaces.'}</p></div>
+  <div class="project-filter-bar"><div class="project-filters" role="group" aria-label={fr ? 'Filtrer les projets' : 'Filter projects'}>{filters.map(([value,label],i)=><button type="button" data-project-filter={value} aria-pressed={i===0}>{label}</button>)}</div><span class="project-count" aria-live="polite"><b data-project-count>{projects.length}</b> {fr ? 'projets' : 'projects'}</span></div>
+  <div class="portfolio-grid">{projects.map((p,i)=><a class="portfolio-card reveal" data-project-category={group(p.slug)} href={localizePath(`/projets/${p.slug}`,lang)} style={`--card-order:${i%3};--project-tone:${['#dce6ed','#e8e4d7','#dfe7da','#e5def0'][i%4]}`}>
+   <div class="portfolio-visual"><span class="portfolio-index">{String(i+1).padStart(2,'0')} / {String(projects.length)}</span><div class="project-browser"><div class="project-browser-bar"><i></i><i></i><i></i><span>{p.title.toLowerCase()}</span></div><img src={asset(p.image)} alt={`${fr ? 'Interface de' : 'Interface of'} ${p.title}`} loading="lazy" width="1500" height="950" /></div>{p.mobileImage && <div class="project-mini-phone"><img src={asset(p.mobileImage)} alt={`${p.title} mobile`} loading="lazy" width="650" height="1250" /></div>}<span class="portfolio-open" aria-hidden="true">↗</span>{p.award && <span class="portfolio-award">{tf(p.award,lang)}</span>}</div>
+   <div class="portfolio-info"><span class="portfolio-category">{tf(p.category,lang)}</span><h3>{p.title}<span aria-hidden="true">↗</span></h3><p>{tf(p.summary,lang)}</p><div class="portfolio-tags">{p.stack.slice(0,3).map(tag=><span>{tag}</span>)}</div></div>
+  </a>)}</div><p class="project-empty" hidden>{fr ? 'Aucun projet dans cette catégorie.' : 'No projects in this category.'}</p>
+ </div>
 </section>

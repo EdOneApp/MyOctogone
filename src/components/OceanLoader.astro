@@ -1,0 +1,26 @@
+---
+import { getLangFromUrl } from '../i18n/utils';
+const fr = getLangFromUrl(Astro.url) === 'fr';
+---
+<div id="ocean-loader" class="ocean-loader" aria-hidden="true" transition:persist>
+ <div class="ocean-loader-glow"></div><div class="ocean-loader-content"><span class="ocean-loader-symbol">◈</span><p>OCTOGONE<span>TECHNOLOGIE</span></p><div class="ocean-loader-line"><i></i></div><small>{fr ? 'Les idées prennent le large.' : 'Ideas set sail.'}</small></div>
+ <div class="ocean-loader-waves"><svg viewBox="0 0 1440 320" preserveAspectRatio="none"><g class="ocean-wave wave-back"><path d="M-1440 140 Q-1260 65 -1080 140 T-720 140 T-360 140 T0 140 T360 140 T720 140 T1080 140 T1440 140 T1800 140 T2160 140 T2520 140 T2880 140 V400 H-1440Z"/></g><g class="ocean-wave wave-mid"><path d="M-1440 190 Q-1260 110 -1080 190 T-720 190 T-360 190 T0 190 T360 190 T720 190 T1080 190 T1440 190 T1800 190 T2160 190 T2520 190 T2880 190 V400 H-1440Z"/></g><g class="ocean-wave wave-front"><path d="M-1440 235 Q-1260 160 -1080 235 T-720 235 T-360 235 T0 235 T360 235 T720 235 T1080 235 T1440 235 T1800 235 T2160 235 T2520 235 T2880 235 V400 H-1440Z"/></g></svg></div>
+</div>
+<script is:inline>
+ (()=>{
+  if (window.__octogoneOceanLoaderReady) return;
+  window.__octogoneOceanLoaderReady = true;
+  const hide=()=>document.documentElement.classList.remove('ocean-loading');
+  const initialStart=performance.now();
+  let initial=true;
+  let failSafe;
+  let settle;
+  const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches||document.documentElement.classList.contains('motion-paused');
+  const finish=()=>{clearTimeout(settle);settle=setTimeout(()=>{hide();initial=false;},reduced()?0:initial?Math.max(0,850-(performance.now()-initialStart)):120);};
+  document.addEventListener('astro:before-preparation',()=>{clearTimeout(settle);if(reduced())return;document.documentElement.classList.add('ocean-loading');clearTimeout(failSafe);failSafe=setTimeout(hide,1800);});
+  document.addEventListener('astro:page-load',finish);
+  window.addEventListener('pageshow',finish);
+  if(document.readyState!=='loading')finish();else document.addEventListener('DOMContentLoaded',finish,{once:true});
+  failSafe=setTimeout(hide,1800);
+ })();
+</script>
